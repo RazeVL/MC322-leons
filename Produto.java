@@ -1,17 +1,37 @@
-/* Atributos
-id – Identificador  ́unico do produto;
-nome – Nome ou tipo do produto (definido no c ́odigo);
-status – Estado atual do produto na linha de produ ̧c ̃ao;
-quantidadeMateriaPrimaNecessaria – Quantidade de mat ́eria-prima necess ́aria para produzir uma
-unidade deste produto.
+public class Produto{
 
-3
+    //Atributos
 
-M ́etodos
-processar – Marca o produto como processado;
-definirDemandaMateriaPrima – Define a quantidade de mat ́eria-prima necess ́aria para produzir o
-produto;
-getDemandaMateriaPrima – Retorna a quantidade de mat ́eria-prima necess ́aria;
-getId – Retorna o identificador do produto;
-getNome – Retorna o nome do produto;
-getStatus – Retorna o status atual do produto. */
+        private int id;
+        private String name; // Nome do produto
+        private boolean status = false; // Estado atual do produto: false = NAO PROCESSADO; true = PROCESSADO
+        private short quantidadeMateriaPrimaNecessaria; // Para produzir 1 unidade
+
+    //Métodos
+
+    public int getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public boolean getStatus(){
+        return status;
+    }
+
+    public short getDemandaMP(){
+        return quantidadeMateriaPrimaNecessaria;
+    }
+
+    public void processar(){
+        status = true;
+        // System.out.println("Produto processado com sucesso!!") 
+    }
+
+    public static void main(String[] args){   
+        // por enquanto nada aqui
+    }
+
+}

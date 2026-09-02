@@ -3,7 +3,7 @@ public class Produto{
     //Atributos
 
         private int id;
-        private String name; // Nome do produto
+        private String nome; // Nome do produto
         private boolean status = false; // Estado atual do produto: false = NAO PROCESSADO; true = PROCESSADO
         private short quantidadeMateriaPrimaNecessaria; // Para produzir 1 unidade
 

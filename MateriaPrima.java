@@ -3,7 +3,7 @@ public class MateriaPrima{
     //Atributos
 
         private int id; // Cada matéria-prima tem um ID próprio
-        private String nome; // Nome ou tipo da matéria-prima
+        private String nome;
         private int quantidade; // Quantidade em estoque
         private String unidade; // Unidade de medida (e.g. kg, m)
         private short quantidadeMinima; // Quantidade mínima para prosseguir com a produção
@@ -34,7 +34,6 @@ public class MateriaPrima{
             return false;
             //para o processo aqui
         }
-
         return true;
     }
 

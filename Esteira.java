@@ -4,25 +4,26 @@ public class Esteira{
 
         private String item; // Item que a esteira carrega. Pode ser materia-prima ou produto
         private boolean emMovimento = false; // Verifica se a esteira ta em movimento
-        private boolean emUso = false; // Verifica se tem um item sendo transportado pela esteira
         private int capacidadeMaxima; // """" Que a esteira transporta
 
     //Métodos
 
-    public String getName(){
-        return name;
-    }
-
     public void ligarEsteira(){
+        if(emMovimento){
+            System.out.println("A esterira já está em movimento!");
+            return;
+        }
         emMovimento = true;
+        System.out.println("Andando!");
     }
 
     public void desligarEsteira(){
+        if(!emMovimento){
+            System.out.println("A esterira já está parada!");
+            return;
+        }
         emMovimento = false;
-    }
-
-    public boolean verificarUso(){
-        return emUso;
+        System.out.println("Pediu pra parar, parou!");
     }
 
     public void adicionarItem(){

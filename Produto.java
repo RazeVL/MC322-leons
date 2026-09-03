@@ -2,10 +2,19 @@ public class Produto{
 
     //Atributos
 
-        private int id;
-        private String nome; // Nome do produto
-        private boolean status = false; // Estado atual do produto: false = NAO PROCESSADO; true = PROCESSADO
+        private int id; // Cada produto tem um ID único, assim como as matérias-primas
+        private String nome;
+        private boolean status; // Estado atual do produto: false = NAO PROCESSADO; true = PROCESSADO
         private short quantidadeMateriaPrimaNecessaria; // Para produzir 1 unidade
+
+    //Construtor
+
+    public Produto(int idInicial, String nomeInicial, short quantidadeInicial) {
+        id = idInicial;
+        nome = nomeInicial;
+        quantidadeMateriaPrimaNecessaria = quantidadeInicial;
+        status = false;
+    }
 
     //Métodos
 
@@ -13,25 +22,30 @@ public class Produto{
         return id;
     }
 
-    public String getName(){
-        return name;
+    public String getNome(){
+        return nome;
     }
 
     public boolean getStatus(){
         return status;
     }
 
-    public short getDemandaMP(){
+    public short getDemandaMateriaPrima(){
         return quantidadeMateriaPrimaNecessaria;
     }
 
-    public void processar(){
+    public boolean processar(){
+        if(status){
+            System.out.println("Oxe, o produto já tá processado!");
+            return false;
+        }
+        System.out.println(nome + " processado!");
         status = true;
-        // System.out.println("Produto processado com sucesso!!") 
+        return true;
     }
 
-    public static void main(String[] args){   
-        // por enquanto nada aqui
+    public void definirDemandaMateriaPrima(short novaQuantidade){
+        quantidadeMateriaPrimaNecessaria = novaQuantidade;
     }
 
 }

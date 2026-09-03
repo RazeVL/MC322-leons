@@ -10,4 +10,9 @@
     acreditamos que nossos produtos de ponta e facilmente acessíveis têm grande potencial de expansão e consolidação no mercado.
 
 2. Visão de expansão futura:
-    A princípio, iniciamos nossas atividades na fábrica com <terminar de digitar após ficar pronto o código>
+    A princípio, iniciamos nossas atividades na fábrica apenas com matérias simples e produtos mais básicos.
+    Por exemplo, transformamos madeira em colchões duros (sim, eles existem, não é tão ruim quanto o nome sugere) e algodão em travesseiros.
+    Temos uma interface de uso relativamente simples para o chefe/gerente da fábrica (você, que está lendo isso!). Como ainda estamos aprendendo a usar
+    a língua Java, essa interface ainda será expandida para englobar todos os pequenos detalhes desta maravilhosa fábrica.
+    No futuro, além dessa expansão, vamos incluir mais produtos, um sistema de esteiras e de inspeção mais sofisticado, um sistema mais user-friendly
+    e, por último e MAIS importante, muito mais conforto para nossos clientes.  -- Assinado, (LEON)²

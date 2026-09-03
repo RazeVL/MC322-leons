@@ -13,51 +13,33 @@ CamaLeons é uma fornecedora de camas e itens de conforto em geral.
     2. Sofá-camas, almofadas, sofás e poltronas;
     3. Camas infláveis e sacos de dormir.
 
-    Ma(ma)térias:
-    1. Ma(ma)deira
+    Matérias:
+    1. Madeira
     2. Espuma
     3. Algodão
 
 
 TAREFA 1:
 changelog 24/08
--> Iniciado o projeto.
+-> Iniciado o projeto
 -> Criado o arquivo main.java
 
 changelog 31/08
 -> Criados os arquivos EstacaoInspecao.java, Esteira.java,  Maquina.java, MateriaPrima.java e Produto,java.
 -> Adicionada uma descrição do projeto através de justificativa.txt
 
-tela de introdução:
-Nome da fábrica;
-Tipo de produto fabricado;
-Matéria-prima principal utilizada;
-Identifica ̧c ̃ao da dupla (nomes dos integrantes).
-Exemplo de tela de introdu ̧c ̃ao:
-========================================
-F ́ABRICA DE SUCO NATURAL
-"Da fruta direto para o seu copo"
-========================================
-Bem-vindos `a nossa f ́abrica de sucos!
-Aqui transformamos frutas frescas em
-sucos naturais e saborosos.
-Desenvolvido por: Marina Rocha e Carlos Souza
-========================================
+changelog 01/09
+-> Expandidos os atributos e métodos de todas as classes
+
+changelog 02/09
+-> Bugfixing miscelâneo
+-> Aprimorados os atributos e métodos de todas as classes
+-> Criada uma mini interface com ações para o usuário na classe main
 
 
 
-
-
-
-
-
-
-
-
-
-
-                                                                                                    
-                                                                                                    
+P.S. Bandeira da Bahia com arte ASCII (possivelmente será útil mais tarde):
+                                                                                                                                                                                            
                                                                                                     
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::**::::::::::::::::::::::

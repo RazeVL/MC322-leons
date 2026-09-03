@@ -16,14 +16,19 @@ public class EstacaoInspecao{
             System.out.println("Você tentou ativar uma estação de inspeção que já tá ativa...");
         }
         else{
-            System.out.println("Estação de inspeção ativa e pronta para (mais) inspeções!");
+            if (getTotalInspecionados() == 0){
+                System.out.println("Estação de inspeção ativa e pronta para as inspeções!");
+            }
+            else{
+                System.out.println("Estação de inspeção ativa e pronta para MAIS inspeções!!")
+            }
             ativa = true;
         }
     }
 
     public void desativarEstacao(){
         if (ativa == false){
-            System.out.println("ALERTA::::::: Tentou desligar o que já tá desligado... >:(");
+            System.out.println(":::::::ALERTA::::::: Tentou desligar o que já tá desligado... >:(");
         }
         else{
             System.out.println("Estação de inspeção desativada.");
@@ -38,12 +43,9 @@ public class EstacaoInspecao{
         }
         else{
             System.out.println("Item inspecionado com sucesso. Tudo nos conformes!");
-            produtosInspecionados = produtosInspecionados + 1; // nn lembro se tem ++ ou += no java e nn consigo ver agora
+            produtosInspecionados++;
+            // Nota: futuramente implementar um caso no qual o item tem problema (por enquanto somos eficientes demais, isso não vai acontecer :D)
         }
-    }
-
-    public static void main(String[] args){   
-        // por enquanto nada aqui
     }
 
 }

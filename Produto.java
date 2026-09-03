@@ -4,7 +4,7 @@ public class Produto{
 
         private int id; // Cada produto tem um ID único, assim como as matérias-primas
         private String nome;
-        private boolean status; // Estado atual do produto: false = NAO PROCESSADO; true = PROCESSADO
+        private int status; // Estado atual do produto: 0 = NAO PROCESSADO; 1 = PROCESSADO; 2 = INSPECIONADO
         private short quantidadeMateriaPrimaNecessaria; // Para produzir 1 unidade
 
     //Construtor
@@ -26,7 +26,7 @@ public class Produto{
         return nome;
     }
 
-    public boolean getStatus(){
+    public int getStatus(){
         return status;
     }
 
@@ -35,12 +35,12 @@ public class Produto{
     }
 
     public boolean processar(){
-        if(status){
+        if(status==1 || status==2){
             System.out.println("Oxe, o produto já tá processado!");
             return false;
         }
         System.out.println(nome + " processado!");
-        status = true;
+        status = 1;
         return true;
     }
 

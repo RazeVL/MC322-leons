@@ -3,7 +3,14 @@ public class EstacaoInspecao{
     //Atributos
 
         private boolean ativa; // Verifica se a estacao ta ativa 
-        private int produtosInspecionados = 0; // Contador de produtos inspecionados
+        private int produtosInspecionados; // Contador de produtos inspecionados
+
+    // Construtor
+
+    public EstacaoInspecao() {
+        ativa = false;
+        produtosInspecionados = 0;
+    }
 
     //Métodos
 
@@ -12,7 +19,7 @@ public class EstacaoInspecao{
     }
 
     public void ativarEstacao(){
-        if (ativa == true){
+        if (ativa){
             System.out.println("Você tentou ativar uma estação de inspeção que já tá ativa...");
         }
         else{
@@ -20,14 +27,14 @@ public class EstacaoInspecao{
                 System.out.println("Estação de inspeção ativa e pronta para as inspeções!");
             }
             else{
-                System.out.println("Estação de inspeção ativa e pronta para MAIS inspeções!!")
+                System.out.println("Estação de inspeção ativa e pronta para MAIS inspeções!!");
             }
             ativa = true;
         }
     }
 
     public void desativarEstacao(){
-        if (ativa == false){
+        if (!ativa){
             System.out.println(":::::::ALERTA::::::: Tentou desligar o que já tá desligado... >:(");
         }
         else{
@@ -38,7 +45,7 @@ public class EstacaoInspecao{
 
     public void inspecionar(){
         /* Inspeciona um produto (desde que a estação esteja ativa!) */
-        if (ativa == false){
+        if (!ativa){
             System.out.println("Não dá pra usar uma estação de inspeção desativada.");
         }
         else{

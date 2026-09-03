@@ -21,11 +21,13 @@ public static void main(String[] args){
 
     Maquina processadoraConfortex = new Produto();
 
-    Esteira esteira1 = new Esteira();
+    Esteira esteira1 = new Esteira(); // transporta matéria-prima do estoque para a máquina
+    Esteira esteira2 = new Esteira(); // transporta o produto da máquina para a estação de inspeção
 
     EstacaoInspecao jarbasInspecoes = new EstacaoInspecao();
 
     // Progressão do programa:
-    System.out.println("Bem-vind@ de volta à fábrica, chefe! O que você gostaria de fazer hoje?");
+    System.out.println("Bem-vind@ de volta à fábrica, chefe! Antes de mais nada, vamos verificar o nosso estoque.");
+    System.out.println("Temos ...") //ainda vou continuar daqui
 
 }

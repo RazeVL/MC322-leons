@@ -8,6 +8,16 @@ public class MateriaPrima{
         private String unidade; // Unidade de medida (e.g. kg, m)
         private short quantidadeMinima; // Quantidade mínima para prosseguir com a produção
 
+    //Construtor
+
+    public MateriaPrima(int idInicial, String nomeInicial, int quantidadeInicial, String unidadeInicial, short quantidadeMinInicial) {
+        id = idInicial;
+        nome = nomeInicial;
+        quantidade = quantidadeInicial;
+        unidade = unidadeInicial;
+        quantidadeMinima = quantidadeMinInicial;
+    }
+
     //Métodos
 
     public int getId(){
@@ -30,9 +40,13 @@ public class MateriaPrima{
             return false;
         }
         if(quantidade < demanda) {
-            System.out.println("Estoque de " + nome + "insuficiente! Restam apenas " + quantidade + unidade + ".");
+            System.out.println("Estoque de " + nome + " insuficiente! Restam apenas " + quantidade + " " + unidade + ".");
             return false;
             //para o processo aqui
+        }
+        if (quantidade - demanda < quantidadeMinima) {
+            System.out.println("Não é possível consumir: o estoque atingirá um nível abaixo do mínimo de segurança (" + quantidadeMinima + unidade + ")!");
+            return false;
         }
         return true;
     }
@@ -42,7 +56,7 @@ public class MateriaPrima{
         atendendo à demanda do fluxo de produção */
         if(verificarDisponibilidade(demanda)){
             quantidade -= demanda;
-            System.out.println("Consumindo " + demanda + unidade + "...\nSucesso! Estoque restante: " + quantidade + unidade + "." );
+            System.out.println("Consumindo " + demanda + " " + unidade + "...\nSucesso! Estoque restante: " + quantidade + unidade + "." );
         }
         else {
             System.out.println("Quantidade insuficiente.");
@@ -57,7 +71,7 @@ public class MateriaPrima{
         }
         else{
             quantidade += quantidadeComprada;
-            System.out.println("Oba! " + quantidadeComprada + unidade + "foram estocados com sucesso! Estoque atual: " + quantidade + unidade + ",");
+            System.out.println("Oba! " + quantidadeComprada + " " + unidade + " foram estocados com sucesso! Estoque atual: " + quantidade + " " + unidade + ".");
         }
         
     }

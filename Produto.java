@@ -13,7 +13,7 @@ public class Produto{
         id = idInicial;
         nome = nomeInicial;
         quantidadeMateriaPrimaNecessaria = quantidadeInicial;
-        status = false;
+        status = 0;
     }
 
     //Métodos

@@ -16,3 +16,14 @@
     a língua Java, essa interface ainda será expandida para englobar todos os pequenos detalhes desta maravilhosa fábrica.
     No futuro, além dessa expansão, vamos incluir mais produtos, um sistema de esteiras e de inspeção mais sofisticado, um sistema mais user-friendly
     e, por último e MAIS importante, muito mais conforto para nossos clientes.  -- Assinado, (LEON)²
+
+    Ideias de expansão mais específicas seguem abaixo.
+    - Adicionar mais opções para o usuário interagir, como ligar/desligar máquina/esteira/estação.
+      A primeira versão da interface era para ser mais simples mesmo, para não comer muito tempo do início das operações.
+    - Colocar intervalos de tempo entre cada atividade da máquina (e.g. 200ms, 500ms, 5s) para deixar o processo mais realista.
+    - Demitir o Leon Luca.
+    - Matérias-primas novas: lã, seda, plástico, aço, poliéster.
+    - Produtos novos: colchão reconflex, cama aquática, cama elástica (é uma cama, né? bora fazer?).
+    - Contratar mais pessoas e colocar o nome delas em partes além da estação de inspeção, assim dá uma humanizada no processo.
+    - Dar nomes mais criativos para tudo, incluindo as próprias máquinas!
+    - Permitir que o chefe tenha mais permissões dentro da fábrica, como encomendar matérias-primas e até produtos novos, se quiser ele mesmo pode inventar!

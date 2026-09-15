@@ -57,12 +57,20 @@ public abstract class Produto {
         return totalProdutosFabricados;
     }
 
-    public void aumentarProbabilidadeFalha() {
+    public void aumentarProbabilidadeFalha(double riscoBaseMaquina) {
+        // calcula quanto a qualidade do produto afeta o risco para cada maquina
         // maior qualidade = maior acúmulo de risco de falha
-        double fatorRisco = this.qualidade * 0.1; 
-        this.probFalhaAcumulada += fatorRisco;
+        double riscoAjustado = riscoBaseMaquina * (this.qualidade + 1.0); 
+        if (riscoAjustado > 0.99){
+            riscoAjustado = 0.99;
+        }
         
+        // acúmulo probabilístico de todas as máquias
+        double chanceSobrevivenciaAtual = 1.0 - this.probFalhaAcumulada;
+        double chanceSobrevivenciaEtapa = 1.0 - riscoAjustado;
+        this.probFalhaAcumulada = 1.0 - (chanceSobrevivenciaAtual * chanceSobrevivenciaEtapa);
+
         System.out.println("A chance dess@ tal de " + this.nome + " falhar subiu pra " 
-            + String.format("%.2f", this.probFalhaAcumulada) + "!!");
+            + String.format("%.2f%%", this.probFalhaAcumulada*100) + "!!");
     }
 }

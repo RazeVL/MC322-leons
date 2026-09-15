@@ -18,7 +18,16 @@ CamaLeons é uma fornecedora de camas e itens de conforto em geral.
     2. Espuma
     3. Algodão
 
+=== IMPORTANTE === IMPORTANTE === IMPORTANTE ===
+MP = matéria-prima. Para fins de simplicidade essa é a única abreviação
+que será usada no código, pois é intuitiva para quem está trabalhando
+nele e também economiza bastante espaço.
 
+
+
+!!!!!!!!!!!!!!!!!!!!!
+!!!DIÁRIO DE BORDO!!!
+!!!!!!!!!!!!!!!!!!!!!
 TAREFA 1:
 changelog 24/08
 -> Iniciado o projeto
@@ -35,6 +44,16 @@ changelog 02/09
 -> Bugfixing miscelâneo
 -> Aprimorados os atributos e métodos de todas as classes
 -> Criada uma mini interface com ações para o usuário na classe main
+
+
+TAREFA 2
+changelog 14/09
+-> a classe produto foi mudada para classe abstrata e foram implementadas as mudanças pedidas
+-> criadas também as subclasses da classe produto
+-> removido o arquivo justificativa.txt (só era para a tarefa 1)
+
+
+NOTA PARA OS AVALIADORES: eu fiz a entrega no google forms dentro do prazo, mas só percebi que tinha entrega no classroom depois de passar o prazo, foi mal :/ enviei um email para o docente Athyrson mais cedo explicando o problema. Abraços!
 
 
 

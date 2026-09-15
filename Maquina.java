@@ -49,7 +49,7 @@ public class Maquina{
             return false;
         }
 
-        int demanda = produto.getDemandaMateriaPrima();
+        int demanda = produto.getDemandaMateriaPrima(); // ARRUMAR
         if (demanda > capacidadeMaxima) {
             System.out.println("A máquina não consegue processar tantos itens por vez.");
             return false;

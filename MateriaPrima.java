@@ -32,6 +32,10 @@ public class MateriaPrima{
         return quantidade;
     }
 
+    public String getUnidade(){ // Extra
+        return unidade;
+    }
+
     public boolean verificarDisponibilidade(int demanda) {
         /* Verifica se tem quantia suficiente da matéria-prima
         para uma dada etapa da produção */

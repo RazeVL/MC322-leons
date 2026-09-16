@@ -7,146 +7,156 @@ import java.util.Scanner;
 public class main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in); // Para receber inputs
+        Scanner scanner = new Scanner(System.in);
 
-        // DECLARAÇÃO DE OBJETOS PRÉ-DEFINIDOS
+        // ==========================================
+        // 1. CONFIGURAÇÃO INICIAL DA FÁBRICA (LEONS)
+        // ==========================================
+        
+        // Matéria-prima base (Agora com custo por unidade)
+        MateriaPrima madeira = new MateriaPrima(1, "Madeira", 100, "kg", 15.0, (short) 10);
+        MateriaPrima algodao = new MateriaPrima(2, "Algodão", 80, "kg", 25.0, (short) 5);
 
-        MateriaPrima madeira = new MateriaPrima(1, "Madeira", 100, "kg", (short) 10); // Se começar sem estoque, logicamente a fábrica não funciona
-        MateriaPrima algodao = new MateriaPrima(2, "Algodão", 80, "kg", (short) 5);
+        // O Gerenciador (O cérebro da fábrica)
+        // Nota: Usaremos a Madeira como matéria-prima principal do gerenciador para simplificar
+        GerenciadorProducao fabrica = new GerenciadorProducao(madeira, 1000.00);
 
-        Produto colchaoDuro = new Produto(101, "Colchão Resiliência", (short) 20);
-        Produto travesseiro = new Produto(102, "Confortravesseiro", (short) 5);
+        // Criando e acoplando as máquinas (Subclasses)
+        Maquina processadora = new MaquinaProcessamento("Processadora CamaLeons", 50, 10.0, 0.15); // 15% de chance de falha
+        Maquina embaladora = new MaquinaEmbalagem("Empacotadora Leons", 50, 5.0, 0.10);      // 10% de chance de falha
+        Maquina inspetora = new EstacaoInspecao("Olho de Águia", 50, 8.0, 0.05);             // 5% de chance de falha
 
-        Maquina processadora = new Maquina("Processadora CamaLeons", 50);
+        fabrica.adicionarMaquina(processadora);
+        fabrica.adicionarMaquina(embaladora);
+        fabrica.adicionarMaquina(inspetora);
 
-        Esteira esteira = new Esteira(100);
+        // Criando as demandas iniciais (baseadas no exemplo da imagem)
+        Demanda demandaColchao = new Demanda("Colchão Resiliência", 5);
+        Demanda demandaTravesseiro = new Demanda("Confortravesseiro", 10);
+        Demanda demandaSimples = new Demanda("Travesseiro Simples", 20);
 
-        EstacaoInspecao estacaoInspecao = new EstacaoInspecao();
+        fabrica.registrarDemanda(demandaColchao);
+        fabrica.registrarDemanda(demandaTravesseiro);
+        fabrica.registrarDemanda(demandaSimples);
 
-        // INTRODUÇÃO
+        // ==========================================
+        // 2. INTRODUÇÃO
+        // ==========================================
         System.out.println("=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
         System.out.println("CamaLeons: Desapareça em nossos lençóis");
         System.out.println("=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
-        System.out.println("Da madeira e do algodão para o travesseiro e o colchão!"); // É uma espécie de segundo slogan e introduz as matérias-primas e produtos principais
+        System.out.println("Da madeira e do algodão para o travesseiro e o colchão!");
         System.out.println("Leon Paillo e Leon Luca, 2026 (c)\n\n");
         System.out.println("Bem-vind@ de volta, chefe! Vamos ao trabalho :)\n\n");
 
-        boolean executando = true; // Define a condição para sair do loop (while true)
+        boolean executando = true;
 
-        // LOOP PRINCIPAL
+        // ==========================================
+        // 3. LOOP PRINCIPAL (MENU)
+        // ==========================================
         while (executando) {
-            System.out.println("========== MENU PRINCIPAL ==========");
-            System.out.println("[1] Verificar estoque de matéria-prima");
-            System.out.println("[2] Iniciar linha de produção");
-            System.out.println("[3] Relatório de inspeção");
-            System.out.println("[4]. Ir dormir (VAI EMBORA NÃO CHEFE, VOLTA PRA TRABALHAR!!)");
-
-            System.out.print("Escolha uma opção: ");
-            int opcao = scanner.nextInt(); // Recebe o input e armazena em "opcao"
+            // Exibe o Budget no topo, conforme a imagem
+            fabrica.exibirBudget();
+            System.out.println("\n========== MENU PRINCIPAL ==========");
+            System.out.println("ATUALIZAR DEMANDAS");
+            System.out.println("1 - Atualizar demanda de Colchão Resiliência");
+            System.out.println("2 - Atualizar demanda de Confortravesseiro");
+            System.out.println("3 - Atualizar demanda de Travesseiro Simples");
+            
+            System.out.println("\nFABRICAR");
+            System.out.println("4 - Fabricar Colchão Resiliência");
+            System.out.println("5 - Fabricar Confortravesseiro");
+            System.out.println("6 - Fabricar Travesseiro Simples");
+            
+            System.out.println("\nCONSULTAR");
+            System.out.println("7 - Ver armazém");
+            System.out.println("8 - Ver estoque de matéria-prima");
+            
+            System.out.println("\nCOMPRAR MATÉRIA-PRIMA");
+            System.out.println("9 - Comprar matéria-prima");
+            
+            System.out.println("\n0 - SAIR");
+            System.out.print("ESCOLHA: ");
+            
+            int opcao = scanner.nextInt();
 
             switch (opcao) {
+                // --- ATUALIZAR DEMANDAS ---
                 case 1:
-                    System.out.println("\n--- ESTOQUE ---");
+                    System.out.print("Nova quantidade para Colchão Resiliência: ");
+                    int qtdColchao = scanner.nextInt();
+                    fabrica.atualizarDemanda(0, qtdColchao);
+                    break;
+                case 2:
+                    System.out.print("Nova quantidade para Confortravesseiro: ");
+                    int qtdTravesseiro = scanner.nextInt();
+                    fabrica.atualizarDemanda(1, qtdTravesseiro);
+                    break;
+                case 3:
+                    System.out.print("Nova quantidade para Travesseiro Simples: ");
+                    int qtdSimples = scanner.nextInt();
+                    fabrica.atualizarDemanda(2, qtdSimples);
+                    break;
+
+                // --- FABRICAR ---
+                case 4:
+                    fabrica.fabricarDemanda(0); // Fabrica Colchão
+                    break;
+                case 5:
+                    fabrica.fabricarDemanda(1); // Fabrica Confortravesseiro
+                    break;
+                case 6:
+                    fabrica.fabricarDemanda(2); // Fabrica Travesseiro Simples
+                    break;
+
+                // --- CONSULTAR ---
+                case 7:
+                    fabrica.exibirArmazem();
+                    break;
+                case 8:
+                    System.out.println("\n--- ESTOQUE DE MATÉRIA-PRIMA ---");
                     System.out.println("[1] " + madeira.getNome() + ": " + madeira.getQuantidade() + " " + madeira.getUnidade());
                     System.out.println("[2] " + algodao.getNome() + ": " + algodao.getQuantidade() + " " + algodao.getUnidade());
                     break;
 
-                case 2:
-                    System.out.println("\n--- SELEÇÃO DE PRODUTO ---");
-                    System.out.println("[1] " + colchaoDuro.getNome() + " (usa " + madeira.getNome() + ")"); // Aprimoramento futuro: botar o getNome da matéria prima no produto direto
-                    System.out.println("[2] " + travesseiro.getNome() + " (usa " + algodao.getNome() + ")");
-                    System.out.print("Sua escolha: ");
-                    int escolhaProduto = scanner.nextInt();
+                // --- COMPRAR MATÉRIA-PRIMA ---
+                case 9:
+                    System.out.println("\n--- COMPRAR MATÉRIA-PRIMA ---");
+                    System.out.println("[1] " + madeira.getNome() + " (R$ " + madeira.getCustoPorUnidade() + "/kg)");
+                    System.out.println("[2] " + algodao.getNome() + " (R$ " + algodao.getCustoPorUnidade() + "/kg)");
+                    System.out.print("Escolha a matéria-prima: ");
+                    int escolhaCompra = scanner.nextInt();
+                    
+                    System.out.print("Quantidade a comprar: ");
+                    int qtdCompra = scanner.nextInt();
 
-                    Produto produtoEscolhido = null;
-                    MateriaPrima materiaEscolhida = null;
-
-                    if (escolhaProduto == 1) {
-                        produtoEscolhido = colchaoDuro;
-                        materiaEscolhida = madeira;
-                    } else if (escolhaProduto == 2) {
-                        produtoEscolhido = travesseiro;
-                        materiaEscolhida = algodao;
+                    if (escolhaCompra == 1) {
+                        // Como o gerenciador só tem uma matéria-prima principal (madeira), 
+                        // compramos direto nela.
+                        fabrica.comprarMateriaPrima(qtdCompra);
+                    } else if (escolhaCompra == 2) {
+                        // Compra manual para o algodão (já que o gerenciador não o gerencia diretamente)
+                        double custo = qtdCompra * algodao.getCustoPorUnidade();
+                        if (custo > 1000.00) { // Exemplo de verificação simples de budget
+                             System.out.println("💸 Orçamento insuficiente!");
+                        } else {
+                             algodao.adicionarEstoque(qtdCompra);
+                        }
                     } else {
-                        System.out.println("Perdão chefe, a remessa de lã chega só semana que vem kkkk");
-                        break;
+                        System.out.println("Opção inválida.");
                     }
-
-                    // O usuário (chefe) tem a liberdade de demandar a quantidade de matéria-prima que quiser (se quiser pode pedir 1 trilhão...)
-                    System.out.print("Informe a demanda de " + materiaEscolhida.getNome() + ": ");
-                    int demandaUsuario = scanner.nextInt();
-                    produtoEscolhido.definirDemandaMateriaPrima(demandaUsuario); // Atualiza a demanda baseado no input
-
-                    System.out.println("\nVerificando disponibilidade de matéria-prima...");
-                    if (!materiaEscolhida.verificarDisponibilidade(demandaUsuario)) {
-                        System.out.println("Começa com in e termina com suficiente. Complete: Matéria-prima ------------!");
-                        break;
-                    }
-
-                    // Ligar os equipamentos necessários (NOTA: NA PRIMEIRA SEMANA DE TRABALHO EU TÔ FAZENDO ISSO AUTOMATICAMENTE POR VC, CHEFE! SE LIGA HEIN)
-                    System.out.println("\nLigando equipamentos (AVISO AUTOMÁTICO: o seu voucher de bot desligador de equipamentos expira em 7 dias)");
-                    esteira.ligar();
-                    processadora.ligar();
-                    estacaoInspecao.ativarEstacao();
-
-                    System.out.println("\nColocando a matéria-prima na esteira...");
-                    esteira.adicionarItem(materiaEscolhida);
-
-                    System.out.println("Transportando para a máquina...");
-                    MateriaPrima insumoNaMaquina = (MateriaPrima) esteira.removerItem();
-
-                    System.out.println("\n Máquina processando...");
-                    boolean sucessoProcessamento = processadora.processar(produtoEscolhido, insumoNaMaquina);
-
-                    if (!sucessoProcessamento) {
-                        System.out.println("Como o processamento falhou, estarei abortando o restante do ciclo >:3");
-                        esteira.desligar();
-                        processadora.desligar();
-                        estacaoInspecao.desativarEstacao();
-                        break;
-                    }
-
-                    System.out.println("\nColocando produto na esteira...");
-                    esteira.adicionarItem(produtoEscolhido);
-                    System.out.println("Transportando até a inspeção...");
-                    Produto produtoNaInspecao = (Produto) esteira.removerItem();
-
-                    System.out.println("\nInspecionando...");
-                    estacaoInspecao.inspecionar();
-
-                    System.out.println("\nDesligando equipamentos... (AVISO AUTOMÁTICO: o seu voucher de bot desligador de equipamentos expira em 7 dias)");
-                    esteira.desligar();
-                    processadora.desligar();
-                    estacaoInspecao.desativarEstacao();
-
-                    System.out.println("\n>>> Ciclo concluído com sucesso para " + produtoNaInspecao.getNome() + "! <<<");
                     break;
 
-                case 3:
-                    System.out.println("\n--- RELATÓRIO DA ESTAÇÃO DE INSPEÇÃO ---");
-                    if (estacaoInspecao.getTotalInspecionados() <= 10){
-                        System.out.println("Relator: Jarbas Boni");
-                    }
-                    else{
-                        System.out.println("Relator: Ana Wucherpfennigheinzelmann");
-                    }
-                    System.out.println("Relator: Jarbas Boni");
-                    System.out.println("Total de itens inspecionados: " + estacaoInspecao.getTotalInspecionados());
-                    break;
-
-                case 4:
+                // --- SAIR ---
+                case 0:
                     System.out.println("\nBom trabalho hoje, até a próxima!! ^^");
                     executando = false;
                     break;
 
+                // --- EASTER EGG (Mantido) ---
                 case 67:
-                    if (estacaoInspecao.getTotalInspecionados() == 67){
-                        System.out.println("\nTu não é ave maria, mas tá cheia de graça, né...\n");
-                        System.out.println("[CONQUISTA DESBLOQUEADA: O NÚMERO DO MAL]     Conquistas: 1/1");
-                    }
-                    else{
-                        System.out.println("\nNÃO.");
-                    }
+                    System.out.println("\nTu não é ave maria, mas tá cheia de graça, né...\n");
+                    System.out.println("[CONQUISTA DESBLOQUEADA: O NÚMERO DO MAL]     Conquistas: 1/1");
                     break;
 
                 default:

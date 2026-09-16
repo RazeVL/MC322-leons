@@ -2,7 +2,7 @@ public abstract class Produto {
     /* Atributos */
     private int id;
     private String nome;
-    private int status; // 0 = criado
+    private int status; // 0 = criado, 1 = produzido/embalado, 2 = inspecionado com sucesso, 3 = rejeitado
     private short quantidadeMPPorUnidade;
     private double qualidade; // 0.0 a 1.0
     private double probFalhaAcumulada;

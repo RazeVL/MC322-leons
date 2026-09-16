@@ -1,58 +1,49 @@
-public class EstacaoInspecao{
+import java.util.Random;
 
-    //Atributos
+public class EstacaoInspecao extends Maquina {
+    private int produtosInspecionados;
 
-        private boolean ativa; // Verifica se a estacao ta ativa 
-        private int produtosInspecionados; // Contador de produtos inspecionados
-
-    // Construtor
-
-    public EstacaoInspecao() {
-        ativa = false;
-        produtosInspecionados = 0;
+    public EstacaoInspecao(String nome, int capacidadeMaxima, double custoOperacao, double probabilidadeFalha) {
+        super(nome, capacidadeMaxima, probabilidadeFalha, custoOperacao); // chama a inicialização da classe máquina, normal
+        this.produtosInspecionados = 0;
     }
 
-    //Métodos
-
-    public int getTotalInspecionados(){
+    public int getTotalInspecionados() {
         return produtosInspecionados;
     }
 
-    public void ativarEstacao(){
-        if (ativa){
-            System.out.println("Você tentou ativar uma estação de inspeção que já tá ativa...");
+    @Override
+    public boolean processar(Produto produto) {
+        if (!estaLigada()) {
+            System.out.println("Ative a " + getNome() + " primeiro.");
+            return false;
         }
-        else{
-            if (getTotalInspecionados() == 0){
-                System.out.println("Estação de inspeção ativa e pronta para as inspeções!");
-            }
-            else{
-                System.out.println("Estação de inspeção ativa e pronta para MAIS inspeções!!");
-            }
-            ativa = true;
-        }
-    }
 
-    public void desativarEstacao(){
-        if (!ativa){
-            System.out.println(":::::::ALERTA::::::: Tentou desligar o que já tá desligado... >:(");
-        }
-        else{
-            System.out.println("Estação de inspeção desativada.");
-            ativa = false;
-        }
-    }
+        System.out.println(getNome() + " está inspecionando o produto " + produto.getNome() + ".");
 
-    public void inspecionar(){
-        /* Inspeciona um produto (desde que a estação esteja ativa!) */
-        if (!ativa){
-            System.out.println("Não dá pra usar uma estação de inspeção desativada.");
+        if (verificarFalha()) {
+            System.out.println("A estação " + getNome() + " bugou, nem mexe nesse produto que sabe-se lá como ele tá.");
+            produto.setStatus(3); // 3 = rejeitado (por segurança)
+            return false;
         }
-        else{
-            System.out.println("Item inspecionado com sucesso. Tudo nos conformes!");
+
+        double chanceRejeicao = produto.getProbabilidadeFalhaAcumulada() + (produto.getQualidade() * 0.5);
+        
+        Random random = new Random();
+        if (random.nextDouble() < chanceRejeicao) {
+            System.out.println("Infelizmente, " + produto.getNome() + " não passou na inspeção.");
+            produto.setStatus(3);
+            return false;
+        } else {
+            System.out.println(produto.getNome() + " APROVADO! Tudo nos conformes :D");
+            produto.setStatus(2); // 2 = finalizado com sucesso
             produtosInspecionados++;
-            // Nota: futuramente implementar um caso no qual o item tem problema (por enquanto somos eficientes demais, isso não vai acontecer :D)
+            return true;
         }
     }
 
+    @Override
+    public String getTipo() {
+        return "Estação de Inspeção";
+    }
 }

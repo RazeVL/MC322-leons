@@ -1,6 +1,6 @@
 public class LinhaOrtopedica extends Produto {
     public LinhaOrtopedica(int id, String nome, short materiaPrima) {
-        super(id, nome, materiaPrima, 0.5);
+        super(id, nome, materiaPrima, 0.5); // Baixa qualidade
     }
 
     @Override

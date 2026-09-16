@@ -6,16 +6,18 @@ public class MateriaPrima{
         private String nome;
         private int quantidade; // Quantidade em estoque
         private String unidade; // Unidade de medida (e.g. kg, m)
+        private double custoUnidade;
         private short quantidadeMinima; // Quantidade mínima para prosseguir com a produção
 
     //Construtor
 
-    public MateriaPrima(int idInicial, String nomeInicial, int quantidadeInicial, String unidadeInicial, short quantidadeMinInicial) {
-        id = idInicial;
-        nome = nomeInicial;
-        quantidade = quantidadeInicial;
-        unidade = unidadeInicial;
-        quantidadeMinima = quantidadeMinInicial;
+    public MateriaPrima(int idInicial, String nomeInicial, int quantidadeInicial, String unidadeInicial, double custoUnidadeInicial, short quantidadeMinInicial) {
+        this.id = idInicial;
+        this.nome = nomeInicial;
+        this.quantidade = quantidadeInicial;
+        this.unidade = unidadeInicial;
+        this.custoUnidade = custoUnidadeInicial;
+        this.quantidadeMinima = quantidadeMinInicial;
     }
 
     //Métodos
@@ -34,6 +36,10 @@ public class MateriaPrima{
 
     public String getUnidade(){ // Extra
         return unidade;
+    }
+
+    public double getCustoUnidade() {
+        return custoUnidade;
     }
 
     public boolean verificarDisponibilidade(int demanda) {

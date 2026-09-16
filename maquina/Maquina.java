@@ -1,68 +1,69 @@
-public class Maquina{
+import java.util.Random;
 
-    //Atributos
+public abstract class Maquina {
 
-        private String nome; // Nome da maquina 
-        private boolean ligada = false; // false = maquina desligada; true = maq. ligada
-        private int capacidadeMaxima; // Quanto a maq. consegue processar por ciclo
+    /* Atributos */
+    private String nome;
+    private boolean ligada;
+    private int capacidadeMaxima;
+    private double probabilidadeFalha; // Chance de falha (0.0 a 1.0)
+    private double custoOperacao;
 
-    // Construtor
-    public Maquina(String nomeInicial, int capacidadeInicial) {
-        nome = nomeInicial;
-        capacidadeMaxima = capacidadeInicial;
-        ligada = false;
+
+    public Maquina(String nome, int capacidadeMaxima, double probabilidadeFalha, double custoOperacao) {
+        this.nome = nome;
+        this.capacidadeMaxima = capacidadeMaxima;
+        this.probabilidadeFalha = probabilidadeFalha;
+        this.custoOperacao = custoOperacao;
+        this.ligada = false;
     }
 
-    //Métodos
+    /* Métodos */
+    public abstract boolean processar(Produto produto);
+    public abstract String getTipo();
 
-    public String getNome(){
-        return nome;
-    }
-
-    public void ligar(){
-        if(ligada){
-            System.out.println("A máquina já está ligada!");
+    public void ligar() {
+        if (ligada) {
+            System.out.println("Oxe, " + nome + " já tá ligada!");
             return;
         }
         ligada = true;
-        System.out.println("Máquina ligada com sucesso!");
+        System.out.println(nome + " ligada.");
     }
 
-    public void desligar(){
-        if(!ligada){
-            System.out.println("A máquina já está desligada!");
+    public void desligar() {
+        if (!ligada) {
+            System.out.println(nome + " já está desligada.");
             return;
         }
         ligada = false;
-        System.out.println("Máquina desligada com sucesso!");
+        System.out.println(nome + " desligada e dormindo nos nossos próprios produtos CamaLeons.");
     }
 
-    public boolean estaLigada(){
-        /* Verifica se a máquina tá ligada ou não */
+    public boolean estaLigada() {
         return ligada;
     }
 
-    public boolean processar(Produto produto, MateriaPrima materia){
-        /* Transforma materia-prima em produto */
-        if (!ligada){
-            System.out.println("A máquina tá desligada! Ligue ela primeiro, bicho preguiçoso!!!");
-            return false;
-        }
-
-        int demanda = produto.getDemandaMateriaPrima(); // ARRUMAR
-        if (demanda > capacidadeMaxima) {
-            System.out.println("A máquina não consegue processar tantos itens por vez.");
-            return false;
-        }
-        if (!materia.verificarDisponibilidade(demanda)) {
-            return false;
-        }
-        if (!produto.processar()) {
-            return false;
-        }
-        
-        materia.consumir(demanda);
-        return true;
+    public String getNome() {
+        return nome;
     }
 
+    public double getCustoOperacao() {
+        return custoOperacao;
+    }
+
+    public double getProbabilidadeFalha() {
+        return probabilidadeFalha;
+    }
+
+    public int getCapacidadeMaxima() {
+        return capacidadeMaxima;
+    }
+
+    
+    protected boolean verificarFalha() {
+        /* Gera um número entre 0 e 1 (porcentagem, basicamente). Se for menor, ocorreu falha */
+        Random random = new Random();
+        return random.nextDouble() < this.probabilidadeFalha;
+    }
 }

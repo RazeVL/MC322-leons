@@ -1,0 +1,43 @@
+import java.util.Random;
+
+public class Empacotex extends Maquina {
+
+    private double chanceAumentarFalha;
+
+    public Empacotex(String nome, int capacidadeMaxima, double custoOperacao, double chanceAumentarFalha) {
+        super(nome, capacidadeMaxima, 0.0, custoOperacao);
+        this.chanceAumentarFalha = chanceAumentarFalha;
+    }
+
+    @Override
+    public boolean processar(Produto produto) {
+        /* Funciona se a máquina estiver ligada e com capacidade */
+        if (!estaLigada()) {
+            System.out.println("A " + getNome() + " tá ela mesma empacotada...");
+            return false;
+        }
+
+        if (produto.getQuantidadeMateriaPrimaPorUnidade() > getCapacidadeMaxima()) {
+            System.out.println("Você tá exigindo demais, põe mais suprimentos na " + getNome() + "!!!");
+            return false;
+        }
+
+        System.out.println("Empacota " + produto.getNome() + " empacota empacota empacota!!!");
+
+        Random random = new Random(); // random% de chance de aumentar a falha
+        if (random.nextDouble() < this.chanceAumentarFalha) {
+            System.out.println("Talvez tenhamos tido algum problema, vixe.");
+            produto.aumentarProbabilidadeFalha(); // Chama o método que criamos na classe Produto
+        } else {
+            System.out.println("Produto empacotado com sucesso.");
+        }
+
+        // produto.setStatus(1); - usar se necessário, por enquanto a EnchiMax já cuida disso
+        return true;
+    }
+
+    @Override
+    public String getTipo() {
+        return "Empacotex";
+    }
+}

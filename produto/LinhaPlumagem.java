@@ -1,6 +1,6 @@
 public class LinhaPlumagem extends Produto {
     public LinhaPlumagem(int id, String nome, short materiaPrima) {
-        super(id, nome, materiaPrima, 0.9);
+        super(id, nome, materiaPrima, 0.9); // Alta qualidade
     }
 
     @Override

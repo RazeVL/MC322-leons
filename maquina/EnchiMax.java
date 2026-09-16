@@ -17,7 +17,7 @@ public class EnchiMax extends Maquina {
             return false;
         }
 
-        if (produto.getQuantidadeMateriaPrimaPorUnidade() > getCapacidadeMaxima()) {
+        if (produto.getQuantidadeMPPorUnidade() > getCapacidadeMaxima()) {
             System.out.println(getNome() + " não aguenta processar tudo isso de uma vez.");
             return false;
         }
@@ -27,7 +27,7 @@ public class EnchiMax extends Maquina {
         Random random = new Random(); // random% de chance de aumentar a falha
         if (random.nextDouble() < this.chanceAumentarFalha) {
             System.out.println("O barulho que a máquina fez foi meio suspeito, talvez tenha danificado algo.");
-            produto.aumentarProbabilidadeFalha(); // Chama o método que criamos na classe Produto
+            produto.aumentarProbabilidadeFalha(0.1); // Chama o método que criamos na classe Produto
         } else {
             System.out.println("Tudo nos conformes por aqui!");
         }

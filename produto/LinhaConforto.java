@@ -1,3 +1,5 @@
+package produto;
+
 public class LinhaConforto extends Produto {
     public LinhaConforto(int id, String nome, short materiaPrima) {
         super(id, nome, materiaPrima, 0.7); // Média qualidade

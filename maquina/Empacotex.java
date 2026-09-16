@@ -1,3 +1,6 @@
+package maquina;
+
+import produto.Produto;
 import java.util.Random;
 
 public class Empacotex extends Maquina {
@@ -17,7 +20,7 @@ public class Empacotex extends Maquina {
             return false;
         }
 
-        if (produto.getQuantidadeMateriaPrimaPorUnidade() > getCapacidadeMaxima()) {
+        if (produto.getQuantidadeMPPorUnidade() > getCapacidadeMaxima()) {
             System.out.println("Você tá exigindo demais, põe mais suprimentos na " + getNome() + "!!!");
             return false;
         }
@@ -27,7 +30,7 @@ public class Empacotex extends Maquina {
         Random random = new Random(); // random% de chance de aumentar a falha
         if (random.nextDouble() < this.chanceAumentarFalha) {
             System.out.println("Talvez tenhamos tido algum problema, vixe.");
-            produto.aumentarProbabilidadeFalha(); // Chama o método que criamos na classe Produto
+            produto.aumentarProbabilidadeFalha(0.15); // Chama o método que criamos na classe Produto
         } else {
             System.out.println("Produto empacotado com sucesso.");
         }

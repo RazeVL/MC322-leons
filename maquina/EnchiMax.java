@@ -1,3 +1,6 @@
+package maquina;
+
+import produto.Produto;
 import java.util.Random;
 
 public class EnchiMax extends Maquina {

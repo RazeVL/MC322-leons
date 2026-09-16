@@ -3,8 +3,10 @@
 /* RA: 289110 | Leon Luca de Araujo Calheira */
 
 import java.util.Scanner;
+import produto.*;
+import maquina.*;
 
-public class main {
+public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -21,9 +23,9 @@ public class main {
         // Nota: Usaremos a Madeira como matéria-prima principal do gerenciador para simplificar
         GerenciadorProducao fabrica = new GerenciadorProducao(madeira, 1000.00);
 
-        // Criando e acoplando as máquinas (Subclasses)
-        Maquina processadora = new MaquinaProcessamento("Processadora CamaLeons", 50, 10.0, 0.15); // 15% de chance de falha
-        Maquina embaladora = new MaquinaEmbalagem("Empacotadora Leons", 50, 5.0, 0.10);      // 10% de chance de falha
+        // Criando e acoplando as máquinas (Subclasses internas de Maquina)
+        Maquina processadora = new EnchiMax("Processadora CamaLeons", 50, 10.0, 0.15); // 15% de chance de falha
+        Maquina embaladora = new Empacotex("Empacotadora Leons", 50, 5.0, 0.10);      // 10% de chance de falha
         Maquina inspetora = new EstacaoInspecao("Olho de Águia", 50, 8.0, 0.05);             // 5% de chance de falha
 
         fabrica.adicionarMaquina(processadora);
@@ -137,10 +139,12 @@ public class main {
                     } else if (escolhaCompra == 2) {
                         // Compra manual para o algodão (já que o gerenciador não o gerencia diretamente)
                         double custo = qtdCompra * algodao.getCustoPorUnidade();
-                        if (custo > 1000.00) { // Exemplo de verificação simples de budget
+                        if (custo > fabrica.getBudget()) { 
                              System.out.println("💸 Orçamento insuficiente!");
                         } else {
-                             algodao.adicionarEstoque(qtdCompra);
+                            fabrica.descontarBudget(custo);
+                            algodao.adicionarEstoque(qtdCompra);
+                            System.out.println("Compra de " + qtdCompra + " " + algodao.getUnidade() + " de Algodão realizada! ;)");
                         }
                     } else {
                         System.out.println("Opção inválida.");

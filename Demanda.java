@@ -1,3 +1,6 @@
+import produto.*;
+import maquina.*;
+
 public class Demanda {
     /* Atributos */
     private String tipoProduto;
@@ -35,7 +38,7 @@ public class Demanda {
 
     public int calcularMateriaPrimaNecessaria(Produto modelo) {
         /* Calcula quanta MP precisa para atender toda a demanda baseando na quantidade de um produto modelo */
-        int materiaPrimaPorUnidade = modelo.getQuantidadeMateriaPrimaPorUnidade();
+        int materiaPrimaPorUnidade = modelo.getQuantidadeMPPorUnidade();
         int totalNecessario = this.quantidadeProdutos * materiaPrimaPorUnidade;
 
         System.out.println("Demanda de MP para " + quantidadeProdutos + " " + tipoProduto + "s: " + totalNecessario + ".");

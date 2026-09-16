@@ -1,3 +1,6 @@
+import produto.*;
+import maquina.*;
+
 public class Esteira{
 
     //Atributos
@@ -37,7 +40,7 @@ public class Esteira{
     public boolean verificarCapacidade(Object item){
         int ocupacao = 0;
         if(item instanceof Produto){
-            ocupacao = ((Produto) item).getDemandaMateriaPrima();
+            ocupacao = ((Produto) item).getQuantidadeMPPorUnidade();
         }
         else if(item instanceof MateriaPrima){
             ocupacao = ((MateriaPrima) item).getQuantidade();

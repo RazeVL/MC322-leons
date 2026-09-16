@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import produto.*;
+import maquina.*;
 
 public class GerenciadorProducao {
     /* Atributos */
@@ -7,7 +9,7 @@ public class GerenciadorProducao {
     private ArrayList<Produto> produtosFabricados;
     private ArrayList<Maquina> maquinas;
     private MateriaPrima materiaPrima;
-    private double budget; // Orçamento, do inglês budget /ˈbʌdʒɪt/
+    private double budget; // Orçamento, do inglês budget /ˈbʌdʒɪt/ (o caba faz olimpíada de linguística, fazer oq né)
     
     public GerenciadorProducao(MateriaPrima materiaPrimaInicial, double budgetInicial) {
         this.demandas = new ArrayList<>();
@@ -15,6 +17,18 @@ public class GerenciadorProducao {
         this.maquinas = new ArrayList<>();
         this.materiaPrima = materiaPrimaInicial;
         this.budget = budgetInicial;
+    }
+
+    public double getBudget(){
+        return this.budget;
+    }
+
+    public boolean descontarBudget(double valor){
+        if(valor <= this.budget) {
+            this.budget -= valor;
+            return true;
+        }
+        return false;
     }
 
     public void adicionarMaquina(Maquina maquina) {
@@ -41,6 +55,19 @@ public class GerenciadorProducao {
         }
     }
 
+    private Produto instanciarProdutoPorIndice(int indexDemanda, int id, String nome){
+        switch(indexDemanda) {
+            case 0:
+                return new LinhaOrtopedica(id, nome, (short) 10);
+            case 1:
+                return new LinhaConforto(id, nome, (short) 8);
+            case 2:
+                return new LinhaPlumagem(id, nome, (short) 5);
+            default:
+                return new LinhaOrtopedica(id, nome, (short) 10);
+        }
+    }
+
     public void fabricarDemanda(int indexDemanda) {
         if (indexDemanda < 0 || indexDemanda >= demandas.size()) {
             System.out.println("Demanda não encontrada");
@@ -55,7 +82,7 @@ public class GerenciadorProducao {
 
         System.out.println("\nINICIANDO PRODUÇÃO DA DEMANDA: " + demanda.toString());
 
-        Produto produtoModelo = new ProdutoAltaQualidade(999, demanda.getTipoProduto(), (short) 10); // Estima quanta MP precisa
+        Produto produtoModelo = instanciarProdutoPorIndice(indexDemanda, 999, demanda.getTipoProduto()); // Estima quanta MP precisa
         int materiaPrimaNecessaria = demanda.calcularMateriaPrimaNecessaria(produtoModelo);
 
         if (!materiaPrima.verificarDisponibilidade(materiaPrimaNecessaria)) {
@@ -75,7 +102,7 @@ public class GerenciadorProducao {
 
         System.out.println("⚙️ Iniciando linha de montagem...");
         for (int i = 0; i < demanda.getQuantidadeProdutos(); i++) {
-            Produto produtoAtual = new ProdutoAltaQualidade(i + 1, demanda.getTipoProduto(), (short) 10);
+            Produto produtoAtual = instanciarProdutoPorIndice(indexDemanda, i + 1, demanda.getTipoProduto());
             
             boolean producaoOk = true;
             for (Maquina maquina : maquinas) {

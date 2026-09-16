@@ -38,7 +38,7 @@ public class MateriaPrima{
         return unidade;
     }
 
-    public double getCustoUnidade() {
+    public double getCustoPorUnidade() {
         return custoUnidade;
     }
 

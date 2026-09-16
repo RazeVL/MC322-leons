@@ -1,3 +1,5 @@
+package produto;
+
 public abstract class Produto {
     /* Atributos */
     private int id;

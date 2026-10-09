@@ -27,3 +27,6 @@
     - Contratar mais pessoas e colocar o nome delas em partes além da estação de inspeção, assim dá uma humanizada no processo.
     - Dar nomes mais criativos para tudo, incluindo as próprias máquinas!
     - Permitir que o chefe tenha mais permissões dentro da fábrica, como encomendar matérias-primas e até produtos novos, se quiser ele mesmo pode inventar!
+
+3. Atualização da visão de expansão futura (tarefa 3 -> tarefa 4):
+    - A maior parte das ideias de expansão passadas foram aplicadas... inclusive, infelizmente, a de demitir o Leon Luca. 

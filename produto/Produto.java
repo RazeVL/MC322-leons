@@ -1,78 +1,57 @@
 package produto;
+import sistema.Auditavel;
+import sistema.StatusProduto;
 
-public abstract class Produto {
+public abstract class Produto implements Auditavel {
     /* Atributos */
     private int id;
     private String nome;
-    private int status; // 0 = criado, 1 = produzido/embalado, 2 = inspecionado com sucesso, 3 = rejeitado
-    private short quantidadeMPPorUnidade;
-    private double qualidade; // 0.0 a 1.0
-    private double probFalhaAcumulada;
-    
-    private static int totalProdutosFabricados = 0; // Conta quantos produtos foram gerados (estático, não varia de objeto para objeto)
+    private StatusProduto status;
+    private short quantidadeMateriaPrimaPorUnidade;
+    private double qualidade;
+    private double probabilidadeFalhaAcumulada;
+    private static int totalProdutosFabricados = 0; // Conta os produtos fabricados, globalmente
 
-    /* Definição de um novo produto */
-    public Produto(int id, String nome, short qtdMPporUnidade, double qualidade) {
+    /* Inicializador */
+    public Produto(int id, String nome, short quantidadeMateriaPrimaPorUnidade, double qualidade) {
         this.id = id;
         this.nome = nome;
-        this.quantidadeMPPorUnidade = qtdMPporUnidade;
+        this.quantidadeMateriaPrimaPorUnidade = quantidadeMateriaPrimaPorUnidade;
         this.qualidade = qualidade;
-        this.status = 0;
-        this.probFalhaAcumulada = 0.0;
+        this.status = StatusProduto.CRIADO;
+        this.probabilidadeFalhaAcumulada = 0.0;
         totalProdutosFabricados++;
     }
 
-    /* Métodos */
     public abstract boolean processar();
     public abstract double calcularTempoProducao();
     public abstract String getTipo();
 
-    public int getId() {
-        return id;
+    // (G/S)etters
+    public int getId() { return id; }
+    public String getNome() { return nome; }
+    public StatusProduto getStatus() { return status; }
+    public void setStatus(StatusProduto status) { this.status = status; }
+    public short getQuantidadeMPPorUnidade() { return quantidadeMateriaPrimaPorUnidade; }
+    public double getQualidade() { return qualidade; }
+    public double getProbabilidadeFalhaAcumulada() { return probabilidadeFalhaAcumulada; }
+    public static int getTotalProdutosFabricados() { return totalProdutosFabricados; }
+
+    public void aumentarProbabilidadeFalha(double fatorRisco) {
+        /* Maior qualidade = maior acúmulo de risco; simplificado desde a última versão */
+        this.probabilidadeFalhaAcumulada += fatorRisco;
     }
 
-    public String getNome() {
-        return nome;
+    @Override
+    public String gerarRelatorioDiagnostico() {
+        return "Produto ID: " + id + " | Nome: " + nome + " | Tipo: " + getTipo() + 
+               " | Qualidade: " + qualidade + " | Falha Acumulada: " + String.format("%.2f", probabilidadeFalhaAcumulada) + 
+               " | Status: " + status.getDescricao();
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public short getQuantidadeMPPorUnidade() {
-        return quantidadeMPPorUnidade;
-    }
-
-    public double getQualidade() {
-        return qualidade;
-    }
-
-    public double getProbFalhaAcumulada() {
-        return probFalhaAcumulada;
-    }
-
-    public static int getTotalProdutosFabricados() {
-        return totalProdutosFabricados;
-    }
-
-    public void aumentarProbabilidadeFalha(double riscoBaseMaquina) {
-        // calcula quanto a qualidade do produto afeta o risco para cada maquina
-        // maior qualidade = maior acúmulo de risco de falha
-        double riscoAjustado = riscoBaseMaquina * (this.qualidade + 1.0); 
-        if (riscoAjustado > 0.99){
-            riscoAjustado = 0.99;
-        }
-        
-        // acúmulo probabilístico de todas as máquias
-        double chanceSobrevivenciaAtual = 1.0 - this.probFalhaAcumulada;
-        double chanceSobrevivenciaEtapa = 1.0 - riscoAjustado;
-        this.probFalhaAcumulada = 1.0 - (chanceSobrevivenciaAtual * chanceSobrevivenciaEtapa);
-
-        System.out.println("A chance dess@ tal de " + this.nome + " falhar subiu pra " 
-            + String.format("%.2f%%", this.probFalhaAcumulada*100) + "!!");
+    @Override
+    public boolean precisaManutencao() {
+        /* Precisa intervir se o risco acumulado for alto, ou se a qualidade for baixa */
+        return this.probabilidadeFalhaAcumulada >= 0.5 || this.qualidade < 0.3;
     }
 }

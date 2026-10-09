@@ -1,10 +1,9 @@
 package maquina;
-
 import produto.Produto;
+import sistema.StatusProduto;
 import java.util.Random;
 
 public class EnchiMax extends Maquina {
-
     private double chanceAumentarFalha;
 
     public EnchiMax(String nome, int capacidadeMaxima, double custoOperacao, double chanceAumentarFalha) {
@@ -19,23 +18,22 @@ public class EnchiMax extends Maquina {
             System.out.println("Liga a " + getNome() + " primeiro, indivíduo iluminado.");
             return false;
         }
-
         if (produto.getQuantidadeMPPorUnidade() > getCapacidadeMaxima()) {
             System.out.println(getNome() + " não aguenta processar tudo isso de uma vez.");
             return false;
         }
-
         System.out.println("Colocando enchimento em " + produto.getNome() + "...");
 
         Random random = new Random(); // random% de chance de aumentar a falha
         if (random.nextDouble() < this.chanceAumentarFalha) {
             System.out.println("O barulho que a máquina fez foi meio suspeito, talvez tenha danificado algo.");
-            produto.aumentarProbabilidadeFalha(0.1); // Chama o método que criamos na classe Produto
+            produto.aumentarProbabilidadeFalha(0.1);
         } else {
             System.out.println("Tudo nos conformes por aqui!");
         }
 
-        produto.setStatus(1); // processado
+        produto.setStatus(StatusProduto.PROCESSADO);
+        aplicarDesgasteNatural();
         return true;
     }
 

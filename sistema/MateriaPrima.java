@@ -1,16 +1,15 @@
+package sistema;
+
 public class MateriaPrima{
+    /* Atributos */
+    private int id; // Cada matéria-prima tem um ID próprio
+    private String nome;
+    private int quantidade; // Quantidade em estoque
+    private String unidade; // Unidade de medida (e.g. kg, m)
+    private double custoUnidade;
+    private short quantidadeMinima; // Quantidade mínima para prosseguir com a produção
 
-    //Atributos
-
-        private int id; // Cada matéria-prima tem um ID próprio
-        private String nome;
-        private int quantidade; // Quantidade em estoque
-        private String unidade; // Unidade de medida (e.g. kg, m)
-        private double custoUnidade;
-        private short quantidadeMinima; // Quantidade mínima para prosseguir com a produção
-
-    //Construtor
-
+    /* Construtor */
     public MateriaPrima(int idInicial, String nomeInicial, int quantidadeInicial, String unidadeInicial, double custoUnidadeInicial, short quantidadeMinInicial) {
         this.id = idInicial;
         this.nome = nomeInicial;
@@ -20,27 +19,12 @@ public class MateriaPrima{
         this.quantidadeMinima = quantidadeMinInicial;
     }
 
-    //Métodos
-
-    public int getId(){
-        return id;
-    }
-
-    public String getNome(){
-        return nome;
-    }
-
-    public int getQuantidade(){
-        return quantidade;
-    }
-
-    public String getUnidade(){ // Extra
-        return unidade;
-    }
-
-    public double getCustoPorUnidade() {
-        return custoUnidade;
-    }
+    /* Métodos (incluindo Getters) */
+    public int getId(){ return id; }
+    public String getNome(){ return nome; }
+    public int getQuantidade(){ return quantidade; }
+    public String getUnidade(){ return unidade; } // Extra
+    public double getCustoPorUnidade() { return custoUnidade; }
 
     public boolean verificarDisponibilidade(int demanda) {
         /* Verifica se tem quantia suficiente da matéria-prima
@@ -50,9 +34,9 @@ public class MateriaPrima{
             return false;
         }
         if(quantidade < demanda) {
-            System.out.println("Estoque de " + nome + " insuficiente! Restam apenas " + quantidade + " " + unidade + ".");
-            return false;
-            //para o processo aqui
+            System.out.println("Estoque de " + nome + " insuficiente! Restam apenas " +
+            quantidade + " " + unidade + ".");
+            return false; // Para o processo aqui
         }
         if (quantidade - demanda < quantidadeMinima) {
             System.out.println("Não é possível consumir: o estoque atingirá um nível abaixo do mínimo de segurança (" + quantidadeMinima + unidade + ")!");
@@ -66,7 +50,8 @@ public class MateriaPrima{
         atendendo à demanda do fluxo de produção */
         if(verificarDisponibilidade(demanda)){
             quantidade -= demanda;
-            System.out.println("Consumindo " + demanda + " " + unidade + "...\nSucesso! Estoque restante: " + quantidade + unidade + "." );
+            System.out.println("Consumindo " + demanda + " " + unidade +
+            "...\nSucesso! Estoque restante: " + quantidade + unidade + "." );
         }
         else {
             System.out.println("Quantidade insuficiente.");
@@ -81,8 +66,8 @@ public class MateriaPrima{
         }
         else{
             quantidade += quantidadeComprada;
-            System.out.println("Oba! " + quantidadeComprada + " " + unidade + " foram estocados com sucesso! Estoque atual: " + quantidade + " " + unidade + ".");
+            System.out.println("Oba! " + quantidadeComprada + " " +
+            unidade + " foram estocados com sucesso! Estoque atual: " + quantidade + " " + unidade + ".");
         }
-        
     }
 }

@@ -59,3 +59,11 @@ changelog 04/10
 -> Adicionado o enumerador StatusProduto (não era necessário mas era legal)
 -> Descanse em paz, Leon Luca.
 -> readicionado o arquivo justificativa.txt
+
+TAREFA 4
+changelog 11/10
+-> Adicionada a Elise no projeto
+-> Implementado o Gradle
+
+changelog 14/10
+-> Implementada a documentação com Javadoc (exceto para Produto+subclasses, Demanda e GerenciadorProducao)

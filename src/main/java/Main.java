@@ -6,9 +6,28 @@ import java.util.Scanner;
 import sistema.*;
 import maquina.*;
 
+/**
+ * Classe principal do sistema.
+ * 
+ * <p>Responsável por inicializar a fábrica, configurar o cenário de operação,
+ * criar as máquinas e demandas iniciais e depois gerenciar toda a interação
+ * do usuário (patrão) por meio de menus e submenus.</p>
+ * 
+ * <p>Note que, antes de entrar no fluxo principal, o programa solicita a escolha
+ * do cenário, cria as máquinas e registra demandas iniciais de exemplo.</p>
+ * 
+ * @author Leonardo Paillo da Silva (@RazeVL)
+ * @since tarefa1
+ */
 public class Main {
 
     private static final String MSG_OPCAO_INV = "Opção inválida.";
+
+    /**
+     * Função principal, a "porta de entrada" do programa.
+     * 
+     * @param args não é usado no programa, mas explicitá-lo aqui é uma boa prática :)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -17,7 +36,7 @@ public class Main {
         System.out.println("   CamaLeons: Desapareça em nossos lençóis");
         System.out.println("=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
         System.out.println("Da madeira e do algodão para o travesseiro e o colchão!");
-        System.out.println("Leonardo Paillo da Silva, 2026 (c)\n");
+        System.out.println("Leo Paillo & Elise, 2026 (c)\n");
         System.out.println("COMUNICADO OFICIAL: Infelizmente, o outro Leon foi desligado do projeto.\n\n");
 
         /* Escolha do cenário */

@@ -3,6 +3,15 @@ import produto.Produto;
 import sistema.StatusProduto;
 import java.util.Random;
 
+/**
+ * Máquina de empacotar os produtos criados no fluxo principal. É sempre
+ * a primeira máquina pela qual passam os produtos.
+ *  
+ * <p>Esta máquina implementa a classe abstrata Maquina, herdando assim os seus atributos.</p>
+ * 
+ * @author Leonardo Paillo da Silva (@RazeVL)
+ * @since tarefa2
+ */
 public class Empacotex extends Maquina {
     private double chanceAumentarFalha;
 
@@ -12,6 +21,15 @@ public class Empacotex extends Maquina {
     }
 
     @Override
+    /**
+     * Processa o produto introduzido à máquina Empacotex, retornando um valor
+     * booleano a ser usado se tiver algum problema no processamento.
+     * 
+     * <p>Aqui, é implementado o método abstrado herdado da classe Maquina.</p>
+     * 
+     * @param produto Produto a ser processado
+     * @return true se o processamento deu certo, false caso contrário
+     */
     public boolean processar(Produto produto) {
         /* Funciona se a máquina estiver ligada e com capacidade */
         if (!estaLigada()) {
@@ -38,6 +56,7 @@ public class Empacotex extends Maquina {
     }
 
     @Override
+    /** @return uma String com o tipo (subclasse) da máquina */
     public String getTipo() {
         return "Empacotex";
     }

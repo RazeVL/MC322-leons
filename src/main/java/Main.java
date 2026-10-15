@@ -1,5 +1,6 @@
-/* Integrante do grupo LEONS: */
-/* RA: 189218 | Leonardo Paillo da Silva */
+/* Integrantes do grupo LEONS: */
+/* RA: 189218 | Leo Paillo */
+/* RA: 260299 | Elise */
 
 import java.util.Scanner;
 import sistema.*;

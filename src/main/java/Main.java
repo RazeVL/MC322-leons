@@ -105,15 +105,11 @@ public class Main {
                     default:
                         System.out.println("Perdão chefia, essa opção não tá no menu. Tente novamente :/");
                 }
+            } catch (PlantaException e) {
+                exibirErro(scanner, "Erro 'esperado': " + e.getMessage());
+            } catch (RuntimeException e) {
+                exibirErro(scanner, "Erro inesperado: " + e.getMessage());
             }
-            
-        catch (PlantaException e) {
-            exibirErro(scanner, e.getMessage());    
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            exibirErro(scanner, e.getMessage());
-        } catch (RuntimeException e) {
-            exibirErro(scanner, "Erro inesperado: " + e.getMessage());
-        }
         }
 
         scanner.close();
@@ -152,11 +148,13 @@ public class Main {
 
             switch (op) {
                 case 1:
-                    System.out.print("Índice da demanda (0 a N): ");
-                    int idx = lerInteiro(scanner, "ÍNDICE: ");
-                    System.out.print("Nova quantidade: ");
-                    int qtd = lerInteiro(scanner, "QUANTIDADE: ");
+                    try {
+                    int idx = lerInteiro(scanner, "Índice da demanda (0 a N): ");
+                    int qtd = lerInteiro(scanner, "Nova quantidade: ");
                     fabrica.atualizarDemanda(idx, qtd);
+                    } catch (DemandaInvalidaException e) {
+                        exibirErro(scanner, "Não deu para atualizar a demanda:\n" + e.getMessage());
+                    }
                     break;
                 case 2:
                     System.out.println("\n--- LISTA DE DEMANDAS ---");
@@ -183,7 +181,15 @@ public class Main {
 
             switch (op) {
                 case 1:
-                    fabrica.executarProximaProducao();
+                    try { fabrica.executarProximaProducao();
+                    } catch (RecursoInsuficienteException e) {
+                        exibirErro(scanner, "Não foi possível iniciar a produção. Motivo:\n" + e.getMessage());
+                    } catch (DemandaInvalidaException e) {
+                        exibirErro(scanner, "Não tem nenhuma demanda disponível! Note: \n" + e.getMessage());
+                    } catch (MaquinaDormindoException e) {
+                        exibirErro(scanner, "Problema com uma máquina durante a produção. Veja: \n"
+                        + e.getMessage());
+                    }
                     break;
                 case 2:
                     System.out.println("Em breve... (funcionalidade opcional)");
@@ -226,8 +232,13 @@ public class Main {
         System.out.println("Matéria-prima gerenciada: " + madeira.getNome()
                 + " (R$ " + madeira.getCustoPorUnidade() + "/" + madeira.getUnidade() + ")");
         System.out.print("Quantidade a comprar: ");
-        int qtd = lerInteiro(scanner, "QUANTIDADE: ");
-        fabrica.comprarMateriaPrima(qtd);
+        try {
+            int qtd = lerInteiro(scanner, "QUANTIDADE: ");
+            fabrica.comprarMateriaPrima(qtd);
+        } catch (RecursoInsuficienteException e) {
+            exibirErro(scanner, "Não foi possível terminar a compra. Nada foi comprado. Motivo:\n"
+            + e.getMessage());
+        }
     }
 
     private static void submenuEstrategia(Scanner scanner, GerenciadorProducao fabrica) {

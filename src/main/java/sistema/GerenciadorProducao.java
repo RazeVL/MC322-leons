@@ -82,12 +82,13 @@ public class GerenciadorProducao {
      * 
      * @param index o índice da demanda na lista de demandas
      * @param novaQuantidade a nova quantidade de produtos pedidos
+     * @throws DemandaInvalidaException se o índice da demanda for inválido
      */
     public void atualizarDemanda(int index, int novaQuantidade) {
         if (index >= 0 && index < demandas.size()) {
             demandas.get(index).atualizarQuantidade(novaQuantidade);
         } else {
-            System.out.println("Índice de demanda inválido [>.<]");
+            throw new DemandaInvalidaException("Índice de demanda inválido [>.<]");
         }
     }
 

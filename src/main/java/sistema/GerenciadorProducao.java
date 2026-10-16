@@ -4,6 +4,19 @@ import maquina.Maquina;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe central do sistema, responsável por gerenciar todas as fases da produção.
+ * 
+ * <p>Atua em um contexto estratégico, delegando decisões para quais demandas fabricar a cada
+ * momento baseando-se nas estratégias de produção escolhidas. A estratégia pode ser trocada
+ * de forma dinâmica a qualquer momento.</p>
+ * 
+ * <p>Suas principais funções são armazenar as demandas, produtos e máquinas, gerenciar o orçamento,
+ * prosseguir com o fluxo de produção, comprar matéria-prima e exibir os relatórios de auditoria.</p>
+ * 
+ * @author Leonardo Paillo da Silva (@RazeVL)
+ * @since tarefa2
+ */
 public class GerenciadorProducao {
     /* Atributos */
     private ArrayList<Demanda> demandas;
@@ -15,7 +28,12 @@ public class GerenciadorProducao {
     private EstrategiaProducao estrategiaAtual;
     private CenarioOperacao cenario;
 
-    /* Inicializador */
+    /**
+     * Inicializador do gerenciador de produção da fábrica.
+     * 
+     * @param materiaPrimaInicial a quantidade de matéria-prima inicial
+     * @param cenario o cenário de operação deste dia
+     */
     public GerenciadorProducao(MateriaPrima materiaPrimaInicial, CenarioOperacao cenario) {
         this.demandas = new ArrayList<>();
         this.produtosFabricados = new ArrayList<>();
@@ -26,18 +44,45 @@ public class GerenciadorProducao {
         this.estrategiaAtual = new EstrategiaOrdemChegada(); // Estratégia padrão
     }
 
+    /**
+     * Permite trocar a estratégia em tempo de execução
+     * 
+     * @param novaEstrategia a nova estratégia a ser implementada sobre as demandas
+     */
     public void setEstrategia(EstrategiaProducao novaEstrategia) {
-        /* Permite trocar a estratégia em tempo de execução */
         this.estrategiaAtual = novaEstrategia;
         System.out.println("Estratégia de produção alterada para " + novaEstrategia.getNomeEstrategia());
     }
     
+    /** @return a estratégia atual */
     public EstrategiaProducao getEstrategiaAtual() { return estrategiaAtual; }
+
+    /** @return o orçamento */
     public double getBudget() { return this.budget; }
+
+    /** @return a lista de demandas */
     public ArrayList<Demanda> getDemandas() { return this.demandas; }
+
+    /**
+     * Acopla uma máquina à linha de produção
+     * 
+     * @param maquina a nova máquina a ser adicionada
+     */
     public void adicionarMaquina(Maquina maquina) { this.maquinas.add(maquina); }
+
+    /**
+     * Adiciona uma demanda à lista de demandas
+     * 
+     * @param novaDemanda a demanda a ser introduzida
+     */
     public void registrarDemanda(Demanda novaDemanda) { this.demandas.add(novaDemanda); }
 
+    /**
+     * Atualiza a quantidade de produtos pedidos por uma dada demanda.
+     * 
+     * @param index o índice da demanda na lista de demandas
+     * @param novaQuantidade a nova quantidade de produtos pedidos
+     */
     public void atualizarDemanda(int index, int novaQuantidade) {
         if (index >= 0 && index < demandas.size()) {
             demandas.get(index).atualizarQuantidade(novaQuantidade);
@@ -46,29 +91,42 @@ public class GerenciadorProducao {
         }
     }
 
+    /**
+     * Usa a estratégia atual para identificar a demanda correta a ser
+     * atendida com base no orçamento atual e então iniciar a fabricação.
+     * 
+     * <p>Ao final, debita o custo da produção do orçamento disponível</p>
+     * 
+     * @throws DemandaInvalidaException se não tiver nenhuma demanda a ser atendida
+     * @throws RecursoInsuficienteException se faltar orçamento ou matéria-prima para atender a demanda
+     */
     public void executarProximaProducao() {
-        /* Usa estrategiaAtual para identificar a demanda correta
-        com base no orçamento atual e iniciar a fabricação */
         Demanda demanda = estrategiaAtual.selecionarDemanda(demandas, this.budget);
 
         if (demanda == null) {
-            System.out.println("A demanda está inelegível por 8 anos. Tente novamente mais tarde.");
-            return;
+            throw new DemandaInvalidaException("Não tem nenhuma demanda disponível atualmente.");
         }
 
         System.out.println("\nEstratégia: " + estrategiaAtual.getNomeEstrategia());
         System.out.println("Fabricando: " + demanda.toString());
 
         Produto produtoModelo = criarProdutoParaDemanda(demanda, 0);
+        int mPNecessaria = demanda.calcularMateriaPrimaNecessaria(produtoModelo);
         double custoMP = materiaPrima.getCustoPorUnidade();
         double custoOperacional = 0;
         for (Maquina m : maquinas) custoOperacional += m.getCustoOperacao();
+        double custoTotal = demanda.calcularCustoEstimado(produtoModelo, custoMP, custoOperacional);
 
-        if (!demanda.isViavelFinanceiramente(this.budget, produtoModelo, custoMP, custoOperacional)) {
-            System.out.println("A demanda é inviável com o orçamento atual, desculpe...");
-            demanda.cancelar();
-            return;
+        if (custoTotal > this.budget) {
+            throw new RecursoInsuficienteException("Tu não tem orçamento pra atender a demanda. Money issue.");
         }
+
+        if (!materiaPrima.verificarDisponibilidade(mPNecessaria)) {
+            throw new RecursoInsuficienteException("Falta-te MP. Compre mais. Matéria-prima issue.");
+        }
+        
+        materiaPrima.consumir(mPNecessaria);
+
 
         demanda.iniciarProducao();
 
@@ -76,23 +134,15 @@ public class GerenciadorProducao {
             Produto p = criarProdutoParaDemanda(demanda, i);
             p.processar();
 
-            boolean ok = true;
             for (Maquina m : maquinas) {
                 if (!m.estaLigada()) m.ligar();
-                if (!m.processar(p)) {
-                    ok = false;
-                    break;
-                }
+                m.processar(p);
             }
-            if (ok) {
-                produtosFabricados.add(p);
-            } else {
-                System.out.println("O produto " + p.getNome() + " foi descartado.");
-            }
+            
+            produtosFabricados.add(p);
         }
 
         // Debita custo do orçamento
-        double custoTotal = demanda.calcularCustoEstimado(produtoModelo, custoMP, custoOperacional);
         this.budget -= custoTotal;
         System.out.println("Custo total: R$" + String.format("%.2f", custoTotal) + 
                            " | Budget restante: R$" + String.format("%.2f", this.budget));
@@ -100,6 +150,13 @@ public class GerenciadorProducao {
         demanda.atender();
     }
 
+    /**
+     * Cria um produto baseado no tipo de demanda, baseando-se na string recebida.
+     * 
+     * @param demanda a demanda para a qual se está criando o produto
+     * @param id o ID do novo produto
+     * @return o novo produto
+     */
     private Produto criarProdutoParaDemanda(Demanda demanda, int id) {
         /* Cria o produto baseado no tipo de demanda, baseando-se na string recebida */
         String tipo = demanda.getTipoProduto().toLowerCase();
@@ -112,6 +169,11 @@ public class GerenciadorProducao {
         }
     }
 
+    /**
+     * Compra uma determinada quantidade de unidades de matéria-prima e adiciona elas ao estoque.
+     * 
+     * @param quantidade a quantidade a ser comprada
+     */
     public void comprarMateriaPrima(int quantidade) {
         double custo = quantidade * materiaPrima.getCustoPorUnidade();
         if (custo > budget) {
@@ -122,9 +184,10 @@ public class GerenciadorProducao {
         materiaPrima.adicionarEstoque(quantidade);
     }
 
-    public void exibirBudget() {
-        System.out.println("BUDGET: R$" + String.format("%.2f", budget) + " | Cenário: " + cenario);
-    }
+    /** Mostra o orçamento atual na tela */
+    public void exibirBudget() {System.out.println("BUDGET: R$"+String.format("%.2f",budget)+" | Cenário "+cenario);}
+    
+    /** Mostra os produtos prontos no armazém */
     public void exibirArmazem() {
         System.out.println("\n=====================================\nARMAZÉM DE PRODUTOS PRONTOS");
         if (produtosFabricados.isEmpty()) {
@@ -178,7 +241,7 @@ public class GerenciadorProducao {
     
 
 
-
+    /** Gera um relatório de auditoria geral da fábrica, com as máquinas, produtos e demandas atuais */
     public void gerarAuditoriaGeral() {
         System.out.println("\n=====================================");
         System.out.println("AUDITORIA GERAL DA PLANTA\n=====================================");

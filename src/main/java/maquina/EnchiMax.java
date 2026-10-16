@@ -2,6 +2,7 @@ package maquina;
 import produto.Produto;
 import sistema.StatusProduto;
 import java.util.Random;
+import sistema.MaquinaDormindoException;
 
 /**
  * Máquina de adicionar enchimento nos produtos criados no fluxo principal. É sempre
@@ -29,16 +30,14 @@ public class EnchiMax extends Maquina {
      * 
      * @param produto Produto a ser processado
      * @return true se o processamento deu certo, false caso contrário
+     * @throws MaquinaDormindoException se a máquina estiver desligada ou não aguentar a quantidade exigida
      */
     public boolean processar(Produto produto) {
-        /* Funciona se a máquina estiver ligada e com capacidade */
         if (!estaLigada()) {
-            System.out.println("Liga a " + getNome() + " primeiro, indivíduo iluminado.");
-            return false;
+            throw new MaquinaDormindoException("Liga a " + getNome() + " primeiro, indivíduo iluminado.");
         }
         if (produto.getQuantidadeMPPorUnidade() > getCapacidadeMaxima()) {
-            System.out.println(getNome() + " não aguenta processar tudo isso de uma vez.");
-            return false;
+            throw new MaquinaDormindoException(getNome() + " não aguenta processar tudo isso de uma vez.");
         }
         System.out.println("Colocando enchimento em " + produto.getNome() + "...");
 

@@ -57,62 +57,57 @@ public class MateriaPrima{
      * Verifica se há estoque suficiente para atender uma demanda.
      * 
      * <p>Mais especificamente, a demanda deve ser maior que zero e o estoque atual
-     * não pode ser menor que a demanda.</p<
+     * não pode ser menor que a demanda.</p>
      * 
      * @param demanda Quantidade que se deseja consumir
-     * @return true se há estoque suficiente, false caso contrário
+     * @return true se há estoque suficiente e a demanda é positiva, false caso contrário
      */
-    public boolean verificarDisponibilidade(int demanda) {
-        if(demanda <= 0) {
-            System.out.println("Demanda inválida: deve ser maior que zero.");
-            return false;
-        }
-        if(quantidade < demanda) {
-            System.out.println("Estoque de " + nome + " insuficiente! Restam apenas " +
-            quantidade + " " + unidade + ".");
-            return false; // Para o processo aqui
-        }
-        if (quantidade - demanda < quantidadeMinima) {
-            System.out.println("Não é possível consumir: o estoque atingirá um nível abaixo do mínimo de segurança (" + quantidadeMinima + unidade + ")!");
-            return false;
-        }
-        return true;
-    }
+    public boolean verificarDisponibilidade(int demanda) { return demanda > 0 && quantidade >= demanda; }
 
     /**
      * Consome uma quantidade de matéria-prima do estoque.
      * 
      * @param demanda Quantidade a ser consumida
-     * @throws IllegalArgumentException se a demanda for negativa ou zero (IMPLEMENTAR)
+     * @throws RecursoInsuficienteException se a demanda for não-positiva ou o estoque for insuficiente
      */
     public void consumir(int demanda){
-        /* Reduz o estoque da matéria-prima em <demanda>,
-        atendendo à demanda do fluxo de produção */
-        if(verificarDisponibilidade(demanda)){
-            quantidade -= demanda;
-            System.out.println("Consumindo " + demanda + " " + unidade +
-            "...\nSucesso! Estoque restante: " + quantidade + unidade + "." );
+        if (demanda < 0) {
+            throw new RecursoInsuficienteException("Não existe demanda negativa, gênio da lâmpada.");
         }
-        else {
-            System.out.println("Quantidade insuficiente.");
+        if (demanda == 0) {
+            throw new RecursoInsuficienteException("Demanda zero não é demanda...");
         }
+        if (quantidade < demanda) {
+            throw new RecursoInsuficienteException(
+                "O estoque de " + nome + " é insuficiente.\n"
+                + "Disponível: " + quantidade + unidade + ".\n"
+                + "Pedido: " + demanda + unidade + "."
+            );
+        }
+
+        quantidade -= demanda;
+        System.out.println("Consumindo " + demanda + unidade +
+            "...\nPronto. Estoque atual: " + quantidade + unidade + "." );
     }
 
     /**
      * Adiciona a quantidade de unidades compradas pelo patrão ao estoque.
      * 
      * @param quantidadeComprada A quantidade de unidades de matéria-prima compradas
+     * @throws RecursoInsuficienteException se os recursos comprados forem nulos ou negativos
      */
     public void adicionarEstoque(int quantidadeComprada){
-        /* Faz a compra de mais estoque, adicionando <n> 
-        ao estoque existente da matéria-prima */
-        if(quantidadeComprada <= 0){
-            System.out.println("Oxe, você não pode adicionar quantidade nula ou negativa!");
+        if (quantidadeComprada < 0){
+            throw new RecursoInsuficienteException("Você quer... subtrair do estoque?? Bandido!!!!");
+        }
+        if (quantidadeComprada == 0) {
+            throw new RecursoInsuficienteException("Oxe, você não pode adicionar vento aqui.");
         }
         else{
             quantidade += quantidadeComprada;
-            System.out.println("Oba! " + quantidadeComprada + " " +
-            unidade + " foram estocados com sucesso! Estoque atual: " + quantidade + " " + unidade + ".");
+            System.out.println(quantidadeComprada + unidade + 
+                " estocado(s) com sucesso! Estoque atual: " +
+                quantidade + " " + unidade + ".");
         }
     }
 }

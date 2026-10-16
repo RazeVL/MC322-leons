@@ -2,6 +2,7 @@ package maquina;
 import produto.Produto;
 import sistema.StatusProduto;
 import java.util.Random;
+import sistema.MaquinaDormindoException;
 
 /**
  * Máquina de empacotar os produtos criados no fluxo principal. É sempre
@@ -28,17 +29,13 @@ public class Empacotex extends Maquina {
      * <p>Aqui, é implementado o método abstrado herdado da classe Maquina.</p>
      * 
      * @param produto Produto a ser processado
-     * @return true se o processamento deu certo, false caso contrário
+     * @return true se o processamento deu certo, false caso contrário (note que pode ter erros não previstos nas exceções)
+     * @throws MaquinaDormindoException se a máquina estiver desligada ou não aguentar a quantidade exigida
      */
     public boolean processar(Produto produto) {
-        /* Funciona se a máquina estiver ligada e com capacidade */
-        if (!estaLigada()) {
-            System.out.println("A " + getNome() + " tá ela mesma empacotada...");
-            return false;
-        }
+        if (!estaLigada()) { throw new MaquinaDormindoException("A "+getNome()+" tá ela mesma empacotada..."); }
         if (produto.getQuantidadeMPPorUnidade() > getCapacidadeMaxima()) {
-            System.out.println("Você tá exigindo demais, põe mais suprimentos na " + getNome() + "!!!");
-            return false;
+            throw new MaquinaDormindoException("Tu exigiu demais, põe mais suprimentos na " + getNome() + "!");
         }
         System.out.println("Empacota " + produto.getNome() + " empacota empacota empacota!!!");
 

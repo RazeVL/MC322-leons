@@ -3,6 +3,7 @@ import produto.Produto;
 import sistema.Auditavel;
 import sistema.StatusMaquina;
 import java.util.Random;
+import sistema.MaquinaDormindoException;
 
 /**
  * Classe abstrata que está representando uma máquina genérica da linha de produção.
@@ -51,30 +52,34 @@ public abstract class Maquina implements Auditavel {
      */
     public abstract String getTipo();
 
-    /** Liga a máquina, se ela não estiver quebrada ou já ligada */
+    /**
+     * Liga a máquina, se ela não estiver quebrada ou já ligada
+     * 
+     * @throws MaquinaDormindoException se a maquina estiver ligada ou quebrada
+     */
     public void ligar() {
         if (status == StatusMaquina.QUEBRADA) {
-            System.out.println("A máquina está quebrada. Não dá pra ligar ela.");
-            return;
+            throw new MaquinaDormindoException("A máquina está quebrada. Não dá pra ligar ela.");
         }
         if (status == StatusMaquina.LIGADA) {
-            System.out.println("Oxe, a " + nome + " já tá ligada!");
-            return;
+            throw new MaquinaDormindoException("Oxe, a " + nome + " já tá ligada!");
         }
         status = StatusMaquina.LIGADA;
         System.out.println(nome + " ligada!");
     }
 
-    /** Desliga a máquina, se ela não estiver quebrada ou já desligada */
+    /**
+     * Desliga a máquina, se ela não estiver quebrada ou já desligada
+     * 
+     * @throws MaquinaDormindoException se a maquina estiver desligada ou quebrada
+     */
     public void desligar() {
         if (status == StatusMaquina.QUEBRADA) {
-            System.out.println("A máquina está quebrada. Vai desligar o quê, hein????!?!?");
-            return;
+            throw new MaquinaDormindoException("A máquina está quebrada. Vai desligar o quê, hein????!?!?");
         }
 
         if (status == StatusMaquina.DESLIGADA) {
-            System.out.println(nome + " já está desligada.");
-            return;
+            throw new MaquinaDormindoException(nome + " já está desligada.");
         }
         status = StatusMaquina.DESLIGADA;
         System.out.println(nome + " desligada e dormindo nos nossos próprios produtos CamaLeons.");

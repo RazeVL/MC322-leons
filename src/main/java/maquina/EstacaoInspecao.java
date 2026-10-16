@@ -2,6 +2,7 @@ package maquina;
 import produto.Produto;
 import sistema.StatusProduto;
 import java.util.Random;
+import sistema.MaquinaDormindoException;
 
 /**
  * Classe abstrata que está representando a estação de inspeção dos produtos. É a etapa final
@@ -41,11 +42,11 @@ public class EstacaoInspecao extends Maquina {
      * 
      * @param produto Produto a ser inspecionado
      * @return true se a inspeção deu certo E o produto passou na inspeção, false caso contrário
+     * @throws MaquinaDormindoException se a máquina estiver desligada
      */
     public boolean processar(Produto produto) {
         if (!estaLigada()) {
-            System.out.println("Ative a " + getNome() + " primeiro.");
-            return false;
+            throw new MaquinaDormindoException("Ative a " + getNome() + " primeiro.");
         }
 
         System.out.println(getNome() + " está inspecionando o produto " + produto.getNome() + ".");

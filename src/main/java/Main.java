@@ -44,8 +44,8 @@ public class Main {
         System.out.println("ESCOLHA O CENÁRIO DE OPERAÇÃO:");
         System.out.println("[1] Ideal: Orçamento farto, baixa falha, desgaste reduzido");
         System.out.println("[2] Apocalíptico: Orçamento apertado, alta falha, desgaste acelerado");
-        System.out.print("Escolha: ");
-        int escolhaCenario = scanner.nextInt();
+
+        int escolhaCenario = lerInteiro(scanner, "Escolha: ");
 
         CenarioOperacao cenario;
         if (escolhaCenario == 2) {
@@ -84,27 +84,36 @@ public class Main {
         while (executando) {
             exibirCabecalho(fabrica, cenario);
             exibirMenuPrincipal();
-            System.out.print("ESCOLHA: ");
-            int opcao = scanner.nextInt();
 
-            switch (opcao) {
-                case 1: submenuDemandas(scanner, fabrica); break;
-                case 2: submenuFabricacao(scanner, fabrica); break;
-                case 3: submenuConsultar(scanner, fabrica, madeira, algodao); break;
-                case 4: submenuComprar(scanner, fabrica, madeira); break;
-                case 5: submenuEstrategia(scanner, fabrica); break;
-                case 6: submenuAuditoria(scanner, fabrica); break;
-                case 67:
-                    System.out.println("\nVocê sabia que o DDD do Mato Grosso do Sul é 67? E que os dígitos 98 e 99 do número pi são 67 também? E que, veja bem, 200/3 ≈ 67? Curta, compartilhe e siga para mais fatos hexahépticos!");
-                    System.out.println("Dito isso, acho que você tá mais pra graça hoje, não pra trabalhar. Tchau.");
-                    break;
-                case 0:
-                    System.out.println("\nBom trabalho hoje, chefe! Até a próxima!! ^^");
-                    executando = false;
-                    break;
-                default:
-                    System.out.println("Perdão chefia, essa opção não tá no menu. Tente novamente :/");
+            int opcao = lerInteiro(scanner, "ESCOLHA: ");
+            try {
+                switch (opcao) {
+                    case 1: submenuDemandas(scanner, fabrica); break;
+                    case 2: submenuFabricacao(scanner, fabrica); break;
+                    case 3: submenuConsultar(scanner, fabrica, madeira, algodao); break;
+                    case 4: submenuComprar(scanner, fabrica, madeira); break;
+                    case 5: submenuEstrategia(scanner, fabrica); break;
+                    case 6: submenuAuditoria(scanner, fabrica); break;
+                    case 67:
+                        System.out.println("\nVocê sabia que o DDD do Mato Grosso do Sul é 67? E que os dígitos 98 e 99 do número pi são 67 também? E que, veja bem, 200/3 ≈ 67? Curta, compartilhe e siga para mais fatos hexahépticos!");
+                        System.out.println("Dito isso, acho que você tá mais pra graça hoje, não pra trabalhar. Tchau.");
+                        break;
+                    case 0:
+                        System.out.println("\nBom trabalho hoje, chefe! Até a próxima!! ^^");
+                        executando = false;
+                        break;
+                    default:
+                        System.out.println("Perdão chefia, essa opção não tá no menu. Tente novamente :/");
+                }
             }
+            
+        catch (PlantaException e) {
+            exibirErro(scanner, e.getMessage());    
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            exibirErro(scanner, e.getMessage());
+        } catch (RuntimeException e) {
+            exibirErro(scanner, "Erro inesperado: " + e.getMessage());
+        }
         }
 
         scanner.close();
@@ -138,15 +147,15 @@ public class Main {
             System.out.println("[1] Atualizar quantidade de uma demanda");
             System.out.println("[2] Listar todas as demandas");
             System.out.println("[0] Voltar");
-            System.out.print("Escolha: ");
-            int op = scanner.nextInt();
+
+            int op = lerInteiro(scanner, "ESCOLHA: ");
 
             switch (op) {
                 case 1:
                     System.out.print("Índice da demanda (0 a N): ");
-                    int idx = scanner.nextInt();
+                    int idx = lerInteiro(scanner, "ÍNDICE: ");
                     System.out.print("Nova quantidade: ");
-                    int qtd = scanner.nextInt();
+                    int qtd = lerInteiro(scanner, "QUANTIDADE: ");
                     fabrica.atualizarDemanda(idx, qtd);
                     break;
                 case 2:
@@ -169,8 +178,8 @@ public class Main {
             System.out.println("[1] Processar próxima demanda (usa a estratégia ativa)");
             System.out.println("[2] Fábricar item específico (não implementado)");
             System.out.println("[0] Voltar");
-            System.out.print("Escolha: ");
-            int op = scanner.nextInt();
+
+            int op = lerInteiro(scanner, "ESCOLHA: ");
 
             switch (op) {
                 case 1:
@@ -193,8 +202,7 @@ public class Main {
             System.out.println("[1] Ver armazém (produtos acabados)");
             System.out.println("[2] Ver estoque de matéria-prima");
             System.out.println("[0] Voltar");
-            System.out.print("Escolha: ");
-            int op = scanner.nextInt();
+            int op = lerInteiro(scanner, "ESCOLHA: ");
 
             switch (op) {
                 case 1:
@@ -218,7 +226,7 @@ public class Main {
         System.out.println("Matéria-prima gerenciada: " + madeira.getNome()
                 + " (R$ " + madeira.getCustoPorUnidade() + "/" + madeira.getUnidade() + ")");
         System.out.print("Quantidade a comprar: ");
-        int qtd = scanner.nextInt();
+        int qtd = lerInteiro(scanner, "QUANTIDADE: ");
         fabrica.comprarMateriaPrima(qtd);
     }
 
@@ -230,8 +238,8 @@ public class Main {
             System.out.println("[2] Maior Demanda");
             System.out.println("[3] Maximizar Produção (respeitando o budget)");
             System.out.println("[0] Voltar");
-            System.out.print("Escolha: ");
-            int op = scanner.nextInt();
+
+            int op = lerInteiro(scanner, "ESCOLHA: ");
 
             switch (op) {
                 case 1: fabrica.setEstrategia(new EstrategiaOrdemChegada()); break;
@@ -249,8 +257,8 @@ public class Main {
             System.out.println("\n----- SUBMENU: AUDITORIA -----");
             System.out.println("[1] Executar relatório de auditoria geral");
             System.out.println("[0] Voltar");
-            System.out.print("Escolha: ");
-            int op = scanner.nextInt();
+
+            int op = lerInteiro(scanner, "ESCOLHA: ");
 
             switch (op) {
                 case 1: fabrica.gerarAuditoriaGeral(); break;
@@ -264,4 +272,27 @@ public class Main {
         /* Preenche uma string com espaços à direita para alinhar */
         return String.format("%-" + n + "s", s);
     }
+
+    /* tratamento de erros */
+    
+    private static int lerInteiro(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, digite um número inteiro.");
+            }
+        }
+    }
+
+    private static void exibirErro(Scanner scanner, String mensagem) {
+        System.out.println("\n========================================");
+        System.out.println("ERRO");
+        System.out.println("========================================");
+        System.out.println(mensagem);
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
 }
+

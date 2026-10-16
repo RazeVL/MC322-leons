@@ -67,3 +67,6 @@ changelog 11/10
 
 changelog 14/10
 -> Implementada a documentação com Javadoc (exceto para Produto+subclasses, Demanda e GerenciadorProducao)
+
+changelog 15/10
+-> Implementado o tratamento de erros em algumas partes do programa

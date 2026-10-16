@@ -30,3 +30,7 @@
 
 3. Atualização da visão de expansão futura (tarefa 3 -> tarefa 4):
     - A maior parte das ideias de expansão passadas foram aplicadas... inclusive, infelizmente, a de demitir o Leon Luca. 
+
+4. Novas esperanças
+    - Com a contratação da Elise para a equipe, temos visões positivas. Foi possível implementar tranquilamente tanto o Javadoc quanto o Gradle, bem como fazer o tratamento de erros.
+    - Para atualizações futuras, esperamos poder refinar a fábrica visualmente e possívelmente acoplar mais uma ou duas máquinas à linha de produção, bem como atender às tarefas em si.

@@ -16,7 +16,6 @@ public class MateriaPrima{
     private int quantidade;
     private String unidade;
     private double custoUnidade;
-    private short quantidadeMinima;
 
     /**
      * Construtor de uma matéria-prima com valores iniciais.
@@ -26,7 +25,6 @@ public class MateriaPrima{
      * @param quantidade Quantidade inicial em estoque
      * @param unidade Unidade de medida (ex: "kg", "m")
      * @param custoPorUnidade Custo em reais por unidade
-     * @param quantidadeMinima Quantidade mínima que precisamos ter para dar seguimento à produção
      */
     public MateriaPrima(int idInicial, String nomeInicial, int quantidadeInicial, String unidadeInicial, double custoUnidadeInicial, short quantidadeMinInicial) {
         this.id = idInicial;
@@ -34,7 +32,6 @@ public class MateriaPrima{
         this.quantidade = quantidadeInicial;
         this.unidade = unidadeInicial;
         this.custoUnidade = custoUnidadeInicial;
-        this.quantidadeMinima = quantidadeMinInicial;
     }
 
     /* Getters */

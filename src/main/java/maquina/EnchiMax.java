@@ -30,7 +30,6 @@ public class EnchiMax extends Maquina {
     private final List<BicoDeInjecao> bicos;
     
     private final double chanceAumentarFalha;
-    private final Random random;
 
     private final static int QUANTIDADE_BICOS = 4;
     private final static double VOL_POR_ENCHIMENTO = 100.0;
@@ -38,7 +37,6 @@ public class EnchiMax extends Maquina {
     public EnchiMax(String nome, int capacidadeMaxima, double custoOperacao, double chanceAumentarFalha) {
         super(nome, capacidadeMaxima, 0.0, custoOperacao);
         this.chanceAumentarFalha = chanceAumentarFalha;
-        this.random = new Random();
 
         this.motor = new MotorDeEnchimento();
         this.sensor = new SensorDeDensidade();

@@ -2,7 +2,7 @@ package maquina.partes;
 
 import sistema.Auditavel;
 
-/*
+/**
  * Parte interna da EnchiMax responsável por gerar a força motriz do enchimento.
  * <p>Relação de composição 1:1.
  * a vida útil deste motor é controlada exclusivamente pelo EnchiMax, que o instancia.</p>

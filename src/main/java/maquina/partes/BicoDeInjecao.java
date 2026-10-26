@@ -3,7 +3,7 @@ package maquina.partes;
 import java.util.Random;
 import sistema.Auditavel;
 
-/*
+/**
 * Parte que injeta o enchimento no tecido
 * <p> relação de composição 1:N
 * diversos bicos diferentes, cada um com ciclo de vida individual,
@@ -12,7 +12,6 @@ import sistema.Auditavel;
 * @author Elise Rabelo (@ewsise)
 * @since tarefa 5
 */
-
 public class BicoDeInjecao implements Auditavel {
     private static double CHANCE_DE_ENTUPIR = 0.1;
     private static double VAZAO_PADRAO = 0.5;
@@ -53,6 +52,6 @@ public class BicoDeInjecao implements Auditavel {
         return "Bico [" + id + "]: " + (entupido ? "entupido" : "funcionando corretamente") + " - Total injetado: " + String.format("%.1f", volTotalInjetado + "litros");
     }
 
-    public boolean precisaManutencao() {return !entupido;}
+    public boolean precisaManutencao() {return entupido;}
 
 }

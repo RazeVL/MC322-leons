@@ -1,6 +1,7 @@
 package sistema;
 import produto.*;
 import maquina.Maquina;
+import maquina.LinhaDeProducao;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class GerenciadorProducao {
     /* Atributos */
     private ArrayList<Demanda> demandas;
     private ArrayList<Produto> produtosFabricados;
-    private ArrayList<Maquina> maquinas;
+    private LinhaDeProducao linhaDeProducao;
     private MateriaPrima materiaPrima;
     private double budget;
     
@@ -37,7 +38,7 @@ public class GerenciadorProducao {
     public GerenciadorProducao(MateriaPrima materiaPrimaInicial, CenarioOperacao cenario) {
         this.demandas = new ArrayList<>();
         this.produtosFabricados = new ArrayList<>();
-        this.maquinas = new ArrayList<>();
+        this.linhaDeProducao = new LinhaDeProducao("Linha Principal CamaLeons");
         this.materiaPrima = materiaPrimaInicial;
         this.cenario = cenario;
         this.budget = cenario.getBudgetInicial();
@@ -68,7 +69,7 @@ public class GerenciadorProducao {
      * 
      * @param maquina a nova máquina a ser adicionada
      */
-    public void adicionarMaquina(Maquina maquina) { this.maquinas.add(maquina); }
+    public void adicionarMaquina(Maquina maquina) { this.linhaDeProducao.adicionarMaquina(maquina); }
 
     /**
      * Adiciona uma demanda à lista de demandas
@@ -115,7 +116,7 @@ public class GerenciadorProducao {
         int mPNecessaria = demanda.calcularMateriaPrimaNecessaria(produtoModelo);
         double custoMP = materiaPrima.getCustoPorUnidade();
         double custoOperacional = 0;
-        for (Maquina m : maquinas) custoOperacional += m.getCustoOperacao();
+        for (Maquina m : this.linhaDeProducao.getMaquinas()) custoOperacional += m.getCustoOperacao();
         double custoTotal = demanda.calcularCustoEstimado(produtoModelo, custoMP, custoOperacional);
 
         if (custoTotal > this.budget) {
@@ -135,7 +136,7 @@ public class GerenciadorProducao {
             Produto p = criarProdutoParaDemanda(demanda, i);
             p.processar();
 
-            for (Maquina m : maquinas) {
+            for (Maquina m : this.linhaDeProducao.getMaquinas()) {
                 if (!m.estaLigada()) m.ligar();
                 m.processar(p);
             }
@@ -178,8 +179,7 @@ public class GerenciadorProducao {
     public void comprarMateriaPrima(int quantidade) {
         double custo = quantidade * materiaPrima.getCustoPorUnidade();
         if (custo > budget) {
-            System.out.println("Faltou-te bufunfa...");
-            return;
+            throw new RecursoInsuficienteException("Faltou-te bufunfa...");
         }
         budget -= custo;
         materiaPrima.adicionarEstoque(quantidade);
@@ -249,14 +249,13 @@ public class GerenciadorProducao {
 
         // Auditoria das Máquinas
         System.out.println("\n--- [] MÁQUINAS [] ---");
-        if (maquinas.isEmpty()) {
+        if (this.linhaDeProducao.getMaquinas().isEmpty()) {
             System.out.println("Nenhuma máquina registrada.");
         } else {
-            for (Maquina m : maquinas) {
-                System.out.println(m.gerarRelatorioDiagnostico());
-                if (m.precisaManutencao()) {
-                    System.out.println("[!!!!!] ALERTA: Esta máquina precisa de manutenção!");
-                }
+            System.out.println(linhaDeProducao.gerarRelatorioDiagnostico());
+
+            if (linhaDeProducao.precisaManutencao()) {
+                System.out.println("[!!!!!] ALERTA: A linha de produção tem componentes que demandam atenção.");
             }
         }
 

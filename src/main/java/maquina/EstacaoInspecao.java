@@ -49,21 +49,21 @@ public class EstacaoInspecao extends Maquina {
             throw new MaquinaDormindoException("Ative a " + getNome() + " primeiro.");
         }
 
-        System.out.println(getNome() + " está inspecionando o produto " + produto.getNome() + ".");
+        System.out.println(getNome() + " está inspecionando o " + produto.getNome() + ".");
 
         double chanceRejeicao = produto.getProbabilidadeFalhaAcumulada() + (produto.getQualidade() * 0.2);
         Random random = new Random();
         boolean produtoDefeituoso = random.nextDouble() < chanceRejeicao;
         
         if(verificarFalha()) {
-            System.out.println("ALERTA! " + getNome() +
-            " sofreu uma falha de leitura e fez uma inspeção incorreta!");
+            System.out.println(getNome() +
+            " sofreu uma falha de leitura e fez uma inspeção IN-COR-RE-TA!!!");
             produtoDefeituoso = !produtoDefeituoso;
         }
 
         boolean resultado;
         if (produtoDefeituoso) {
-            System.out.println("Infelizmente, " + produto.getNome() + " não passou na inspeção.");
+            System.out.println(produto.getNome() + " não passou na inspeção.");
             produto.setStatus(StatusProduto.REJEITADO);
             resultado = false;
         } else {

@@ -3,7 +3,6 @@ package maquina;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import produto.Produto;
@@ -46,7 +45,9 @@ public class EnchiMax extends Maquina {
         this.bicos = new ArrayList<>();
         for (int i = 0; i < QUANTIDADE_BICOS; i++){
             this.bicos.add(new BicoDeInjecao(i + 1));
+        }
     }
+
 
     /**
      * Processa o produto introduzido à máquina EnchiMax, retornando um valor
@@ -58,8 +59,6 @@ public class EnchiMax extends Maquina {
      * @return true se o processamento deu certo, false caso contrário
      * @throws MaquinaDormindoException se a máquina estiver desligada ou não aguentar a quantidade exigida
      */
-
-    }
     public boolean processar(Produto produto) {
         if (!estaLigada()) {
             throw new MaquinaDormindoException("Liga a " + getNome() + " primeiro, indivíduo iluminado.");
@@ -106,18 +105,13 @@ public class EnchiMax extends Maquina {
 
         motor.registrarUso(2.0);
         aplicarDesgasteNatural();
-
         produto.setStatus(StatusProduto.PROCESSADO);
-        aplicarDesgasteNatural();
         return true;
     }
 
     @Override
     /** @return uma String com o tipo (subclasse) da máquina */
-    public String getTipo() {
-        return "EnchiMax";
-        
-    }
+    public String getTipo() { return "EnchiMax"; }
 
     @Override 
     public void ligar() {

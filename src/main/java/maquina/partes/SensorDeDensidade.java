@@ -3,7 +3,7 @@ package maquina.partes;
 import java.util.Random;
 import sistema.Auditavel;
 
-/* 
+/**
 * Parte que mede a densidade do enchimento
 * <p> relação de composição 1:1.
 * O sensor faz leituras e degrada conforme os usos, necessitando de recalibração

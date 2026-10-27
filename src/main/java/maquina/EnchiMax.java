@@ -160,7 +160,6 @@ public class EnchiMax extends Maquina {
         return false;
     }
 
-
     public double lerDensidadeAtual() { return sensor.lerDensidade(); }
 
     public boolean isSensorCalibrado() { return sensor.estaCalibrado(); }

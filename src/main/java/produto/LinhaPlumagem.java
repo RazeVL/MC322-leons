@@ -57,10 +57,6 @@ public class LinhaPlumagem extends Produto {
     public double calcularTempoProducao() { return 6.0;  }
 
     @Override
-    /**
-     * Retorna o nome do tipo de produto
-     * 
-     * @return uma String com o tipo do produto
-     */
+    /** @return uma String com o nome do produto */
     public String getTipo() { return "Linha Plumagem"; }
 }

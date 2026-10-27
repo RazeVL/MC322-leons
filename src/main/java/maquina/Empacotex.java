@@ -33,7 +33,9 @@ public class Empacotex extends Maquina {
      * @throws MaquinaDormindoException se a máquina estiver desligada ou não aguentar a quantidade exigida
      */
     public boolean processar(Produto produto) {
-        if (!estaLigada()) { throw new MaquinaDormindoException("A "+getNome()+" tá ela mesma empacotada..."); }
+        if (!estaLigada()) {
+            throw new MaquinaDormindoException("A "+getNome()+" tá ela mesma empacotada...");
+        }
         if (produto.getQuantidadeMPPorUnidade() > getCapacidadeMaxima()) {
             throw new MaquinaDormindoException("Tu exigiu demais, põe mais suprimentos na " + getNome() + "!");
         }
@@ -54,7 +56,5 @@ public class Empacotex extends Maquina {
 
     @Override
     /** @return uma String com o tipo (subclasse) da máquina */
-    public String getTipo() {
-        return "Empacotex";
-    }
+    public String getTipo() { return "Empacotex"; }
 }

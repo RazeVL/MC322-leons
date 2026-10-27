@@ -50,7 +50,9 @@ public class SensorDeDensidade implements Auditavel{
     public double getDensidadeAlvo() {return densidadeAlvo;}
 
     public String gerarRelatorioDiagnostico() {
-        return "Sensor de densidade: " + (calibrado ? "calibrado" : "descalibrado") + " - Última leitura: " + String.format("%.1f", ultimaLeitura) + "kg/m^3";
+        return "Sensor de densidade: " +
+        (calibrado ? "calibrado" : "descalibrado") +
+        " - Última leitura: " + String.format("%.1f", ultimaLeitura) + "kg/m^3";
     }
 
     @Override 

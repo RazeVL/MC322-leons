@@ -3,8 +3,21 @@
 /* RA: 260299 | Elise */
 
 import java.util.Scanner;
-import sistema.*;
-import maquina.*;
+
+import br.unicamp.ic.mc322.exception.DemandaInvalidaException;
+import br.unicamp.ic.mc322.exception.MaquinaDormindoException;
+import br.unicamp.ic.mc322.exception.PersistenciaException;
+import br.unicamp.ic.mc322.exception.PlantaException;
+import br.unicamp.ic.mc322.exception.RecursoInsuficienteException;
+import br.unicamp.ic.mc322.model.CenarioOperacao;
+import br.unicamp.ic.mc322.model.Demanda;
+import br.unicamp.ic.mc322.model.MateriaPrima;
+import br.unicamp.ic.mc322.model.maquina.*;
+import br.unicamp.ic.mc322.persistance.PersistenciaPlanta;
+import br.unicamp.ic.mc322.service.GerenciadorProducao;
+import br.unicamp.ic.mc322.strategy.EstrategiaMaiorDemanda;
+import br.unicamp.ic.mc322.strategy.EstrategiaMaximoProdutos;
+import br.unicamp.ic.mc322.strategy.EstrategiaOrdemChegada;
 
 /**
  * Classe principal do sistema.
@@ -30,6 +43,8 @@ public class Main {
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        PersistenciaPlanta persistencia = new PersistenciaPlanta();
+        GerenciadorProducao fabrica = null;
 
         /* Introdução */
         System.out.println("=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
@@ -41,6 +56,18 @@ public class Main {
 
         /* Escolha do cenário */
         System.out.println("=====================================");
+
+        System.out.println("Deseja carregar o save anterior? (S/N)");
+        String resp = scanner.nextLine();
+            if (resp.equalsIgnoreCase("S")) {
+                try {
+                    fabrica = persistencia.carregar("planta_salva.xml"); // Substitui apenas se der certo
+                    System.out.println("Save carregado com sucesso!");
+                } catch (PersistenciaException e) {
+                    System.out.println("Aviso: " + e.getMessage());
+                    System.out.println("Continuando com a planta em memória.");
+                }
+            }   
         System.out.println("ESCOLHA O CENÁRIO DE OPERAÇÃO:");
         System.out.println("[1] Ideal: Orçamento farto, baixa falha, desgaste reduzido");
         System.out.println("[2] Apocalíptico: Orçamento apertado, alta falha, desgaste acelerado");
@@ -62,13 +89,16 @@ public class Main {
         /* Configs iniciais */
         MateriaPrima madeira = new MateriaPrima(1, "Madeira", 100, "kg", 15.0, (short) 10);
         MateriaPrima algodao = new MateriaPrima(2, "Algodão", 80, "kg", 25.0, (short) 5);
-        GerenciadorProducao fabrica = new GerenciadorProducao(madeira, cenario);
+        if (fabrica == null) {
+            fabrica = new GerenciadorProducao(madeira, cenario);
+        }
         Maquina enchimax = new EnchiMax("EnchiMax", 50, 10.0,
                 0.15 * cenario.getMultiplicadorFalha());
         Maquina empacotex = new Empacotex("Empacotex", 50, 5.0,
                 0.10 * cenario.getMultiplicadorFalha());
         Maquina inspetora = new EstacaoInspecao("Estação de Inspeção", 50, 8.0,
                 0.05 * cenario.getMultiplicadorFalha());
+
         enchimax.setMultiplicadorDesgaste(cenario.getMultiplicadorDesgaste());
         empacotex.setMultiplicadorDesgaste(cenario.getMultiplicadorDesgaste());
         inspetora.setMultiplicadorDesgaste(cenario.getMultiplicadorDesgaste());
@@ -94,6 +124,13 @@ public class Main {
                     case 4: submenuComprar(scanner, fabrica, madeira); break;
                     case 5: submenuEstrategia(scanner, fabrica); break;
                     case 6: submenuAuditoria(scanner, fabrica); break;
+                    case 7:
+                        try {
+                            persistencia.salvar(fabrica, "planta_salva.xml");
+                        } catch (PersistenciaException e) {
+                            System.out.println("Erro ao salvar: " + e.getMessage());
+                        }
+                        break;
                     case 67:
                         System.out.println("\nVocê sabia que o DDD do Mato Grosso do Sul é 67? E que os dígitos 98 e 99 do número pi são 67 também? E que, veja bem, 200/3 ≈ 67? Curta, compartilhe e siga para mais fatos hexahépticos!");
                         System.out.println("Dito isso, acho que você tá mais pra graça hoje, não pra trabalhar. Tchau.");
@@ -132,6 +169,7 @@ public class Main {
         System.out.println("[4] Comprar Matéria-Prima");
         System.out.println("[5] Gerenciar Estratégia");
         System.out.println("[6] Auditoria");
+        System.out.println("[7] Salvar progresso");
         System.out.println("[0] Sair");
     }
 
@@ -200,8 +238,7 @@ public class Main {
         }
     }
 
-    private static void submenuConsultar(Scanner scanner, GerenciadorProducao fabrica,
-                                          MateriaPrima madeira, MateriaPrima algodao) {
+    private static void submenuConsultar(Scanner scanner, GerenciadorProducao fabrica, MateriaPrima madeira, MateriaPrima algodao) {
         boolean voltar = false;
         while (!voltar) {
             System.out.println("\n----- SUBMENU: CONSULTAR -----");

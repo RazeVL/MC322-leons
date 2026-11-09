@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<planta>
+    <budget>3500.0</budget>
+    <maquinas>
+        <maquina nome="EnchiMax" saude="100.0" status="DESLIGADA" tipo="EnchiMax">
+            <motor desgaste="0.0" operacional="true" rpm="0" rpmAlvo="1500"/>
+            <sensor calibrado="true" leituras="0"/>
+            <bicos>
+                <bico entupido="false" id="1"/>
+                <bico entupido="false" id="2"/>
+                <bico entupido="false" id="3"/>
+                <bico entupido="false" id="4"/>
+            </bicos>
+        </maquina>
+    </maquinas>
+    <demandas>
+        <demanda nome="Colchão Resiliência" quantidade="5" status="PENDENTE"/>
+        <demanda nome="Confortravesseiro" quantidade="10" status="PENDENTE"/>
+        <demanda nome="Travesseiro Premium" quantidade="3" status="PENDENTE"/>
+    </demandas>
+</planta>

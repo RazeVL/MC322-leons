@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.unicamp.ic.mc322.service.GerenciadorProducaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-09T23:17:19" hostname="elise-ThinkPad-E14" time="0.177">
+  <properties/>
+  <testcase name="gerarAuditoriaGeralIncluiDiagnosticoDosBicosSemFalhar()" classname="br.unicamp.ic.mc322.service.GerenciadorProducaoTest" time="0.177"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

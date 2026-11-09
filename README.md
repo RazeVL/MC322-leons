@@ -70,3 +70,12 @@ changelog 14/10
 
 changelog 15/10
 -> Implementado o tratamento de erros em algumas partes do programa
+
+changelog 21/10
+-> Adicionados os novos componentes da EnchiMax
+
+changelog 25/10
+-> Criada a linha de produção
+
+changelog 26/10
+-> Ajustes finais e bugfixes. Adicionados os diagramas em uma pasta separada "uml"

@@ -72,7 +72,9 @@ public class LinhaDeProducao implements Auditavel {
             return sb.toString();
         }
 
-        for (Maquina m : maquinas) { sb.append("\n  -> ").append(m.gerarRelatorioDiagnostico()); }
+        for (Maquina m : maquinas) {
+            sb.append("\n  -> ").append(m.gerarRelatorioDiagnostico());
+        }
         return sb.toString();
     }
 

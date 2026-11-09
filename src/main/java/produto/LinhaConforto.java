@@ -59,12 +59,6 @@ public class LinhaConforto extends Produto {
     }
 
     @Override
-    /**
-     * Retorna o nome do tipo de produto
-     * 
-     * @return uma String com o tipo do produto
-     */
-    public String getTipo() {
-        return "Linha Conforto";
-    }
+    /** @return uma String com o nome do produto */
+    public String getTipo() { return "Linha Conforto"; }
 }

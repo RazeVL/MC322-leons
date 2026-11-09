@@ -49,7 +49,9 @@ public class BicoDeInjecao implements Auditavel {
 
     @Override 
     public String gerarRelatorioDiagnostico() {
-        return "Bico [" + id + "]: " + (entupido ? "entupido" : "funcionando corretamente") + " - Total injetado: " + String.format("%.1f", volTotalInjetado + "litros");
+        return "Bico [" + id + "]: " +
+        (entupido ? "entupido" : "funcionando corretamente") +
+        " - Total injetado: " + String.format("%.1f", volTotalInjetado + "litros");
     }
 
     public boolean precisaManutencao() {return entupido;}

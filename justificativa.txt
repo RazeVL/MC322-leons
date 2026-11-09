@@ -34,3 +34,6 @@
 4. Novas esperanças
     - Com a contratação da Elise para a equipe, temos visões positivas. Foi possível implementar tranquilamente tanto o Javadoc quanto o Gradle, bem como fazer o tratamento de erros.
     - Para atualizações futuras, esperamos poder refinar a fábrica visualmente e possívelmente acoplar mais uma ou duas máquinas à linha de produção, bem como atender às tarefas em si.
+
+5. Divisão por partes
+    - A máquina EnchiMax agora possui três tipos de componentes ativos, com relações 1:1 e 1:N.

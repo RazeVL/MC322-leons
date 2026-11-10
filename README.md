@@ -29,16 +29,16 @@ com produtos de madeira, visto que é o produto mais abundante na região.
 # Geral
 
 **Como funciona:**
-    Você terá várias opções ao longo do seu "expediente" na fábrica, sendo a sua
+Você terá várias opções ao longo do seu "expediente" na fábrica, sendo a sua
 interação principalmente através de menus com uma quantidade limitada, porém intuitiva,
 de escolhas. Experimente bastante, tente criar produtos e aperfeiçoar as máquinas
 sempre que necessário, e vise sempre o lucro mais confortável que conseguir!
 
-    No início da simulação, você deverá escolher entre um cenário normal e outro
+No início da simulação, você deverá escolher entre um cenário normal e outro
 apocalíptico. Escolha sabiamente, baseando-se na sua própria visão de mundo: você
 quer viver no conforto que pregamos, ou desafiar aos seus próprios limites?
 
-    Quando sair da simulação, lembre-se de salvar o seu progresso, para assim poder
+Quando sair da simulação, lembre-se de salvar o seu progresso, para assim poder
 carregá-lo novamente da próxima vez que voltar ao trabalho.
 
 **Recomendações:**
@@ -78,6 +78,7 @@ Além disso, temos alguns casos de teste disponíveis para verificar a eficiênc
 
 # Diário de Bordo
 **TAREFA 1**
+
 changelog 24/08
 - Iniciado o projeto
 - Criado o arquivo main.java
@@ -95,12 +96,14 @@ changelog 02/09
 - Criada uma mini interface com ações para o usuário na classe main
 
 **TAREFA 2**
+
 changelog 14/09
 - a classe produto foi mudada para classe abstrata e foram implementadas as mudanças pedidas
 - criadas também as subclasses da classe produto
 - removido o arquivo justificativa.txt (só era para a tarefa 1)
 
 **TAREFA 3**
+
 changelog 04/10
 - Deletada a Esteira.java pois não é mais usada no fluxo do programa e acabou ficando meio inútil
 - Implementadas as mudanças necessárias para a Tarefa 3
@@ -109,6 +112,7 @@ changelog 04/10
 - readicionado o arquivo justificativa.txt
 
 **TAREFA 4**
+
 changelog 11/10
 - Adicionada a Elise no projeto
 - Implementado o Gradle
@@ -120,6 +124,7 @@ changelog 15/10
 - Implementado o tratamento de erros em algumas partes do programa
 
 **TAREFA 5**
+
 changelog 21/10
 - Adicionados os novos componentes da EnchiMax
 
@@ -130,6 +135,7 @@ changelog 26/10
 - Ajustes finais e bugfixes. Adicionados os diagramas em uma pasta separada "uml"
 
 **TAREFA 6**
+
 changelog 7/10
 - Refatorada a fábrica
 - Adicionado o esqueleto de PersistenciaXML.java
